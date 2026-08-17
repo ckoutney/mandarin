@@ -51,9 +51,9 @@
   .digital{display:flex;justify-content:center;align-items:center;border:2px solid #d9e6f1;border-radius:22px;background:#f8fbff;padding:24px;font-size:clamp(40px,10vw,68px);font-weight:950;letter-spacing:.03em;min-height:150px}
   .options{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}.option{min-height:90px;border:2px solid var(--line);border-radius:20px;background:#fff;cursor:pointer;font-weight:950;font-size:clamp(25px,5vw,36px);transition:.12s;box-shadow:0 6px 14px rgba(30,67,98,.06)}.option:hover{transform:translateY(-2px);border-color:#a9c5ea}.option:active{transform:scale(.98)}
   .choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.item-card{background:#fff;border:2px solid var(--line);border-radius:20px;padding:18px;cursor:pointer;min-height:130px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;box-shadow:0 7px 15px rgba(0,0,0,.05);transition:.12s}.item-card:hover{border-color:#a7c7f4;transform:translateY(-2px)}.item-emoji{font-size:50px}.item-word{font-size:34px;font-weight:950}.item-hint{font-size:14px;color:var(--muted);font-weight:800;text-align:center}
-  .dress-stage{background:linear-gradient(180deg,#e9f8ff,#fff7ef);border-radius:26px;min-height:280px;position:relative;display:flex;justify-content:center;align-items:flex-end;padding:18px;overflow:hidden;border:1px solid #e1e9ef}.person{font-size:145px;line-height:1}.wear-badges{position:absolute;left:14px;top:14px;display:flex;gap:7px;flex-wrap:wrap}.wear{background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 11px;font-weight:900}.wear.done{background:#eafff1;border-color:#9fdfb8;color:#268455}
+  .dress-stage{background:linear-gradient(180deg,#e9f8ff,#fff7ef);border-radius:26px;min-height:280px;position:relative;display:flex;justify-content:center;align-items:flex-end;padding:18px;overflow:hidden;border:1px solid #e1e9ef}.person{font-size:145px;line-height:1;position:relative;width:180px;height:210px;display:flex;align-items:flex-end;justify-content:center}.person-base{font-size:145px;line-height:1}.wear-layer{position:absolute;left:50%;transform:translateX(-50%);font-size:72px;line-height:1;pointer-events:none}.wear-clothes{bottom:66px}.wear-socks{bottom:18px;font-size:46px}.wear-shoes{bottom:0;font-size:48px}.wear-badges{position:absolute;left:14px;top:14px;display:flex;gap:7px;flex-wrap:wrap}.wear{background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 11px;font-weight:900}.wear.done{background:#eafff1;border-color:#9fdfb8;color:#268455}
   .bag{background:linear-gradient(180deg,#eff7ff,#fff);border:2px dashed #a9c5df;border-radius:24px;padding:20px;display:flex;align-items:center;justify-content:center;min-height:175px;margin-bottom:14px}.bag-icon{font-size:92px;filter:drop-shadow(0 8px 8px rgba(0,0,0,.08))}.bag-items{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:12px}.packed{padding:8px 12px;border-radius:999px;background:#eafff1;border:1px solid #a7dfbc;font-size:22px;font-weight:950}
-  .walk-scene{position:relative;min-height:330px;border-radius:26px;overflow:hidden;background:linear-gradient(#bfe8ff 0 56%,#d7f3c6 56% 68%,#c8b59e 68% 100%);border:1px solid #c7dce7}.sun{position:absolute;right:20px;top:18px;font-size:48px}.cloud{position:absolute;font-size:45px;opacity:.9}.cloud.one{left:12%;top:30px}.cloud.two{left:52%;top:76px}.road{position:absolute;left:0;right:0;bottom:0;height:33%;background:#c5b49d;clip-path:polygon(21% 0,79% 0,100% 100%,0 100%)}.kid{position:absolute;bottom:54px;left:20%;font-size:84px}.review-object{position:absolute;cursor:pointer;user-select:none;transition:.12s}.review-object:hover{transform:scale(1.08)}.ro-1{right:14%;bottom:56px;font-size:57px}.ro-2{left:8%;bottom:82px;font-size:55px}.ro-3{left:38%;bottom:38px;font-size:55px}.ro-4{right:31%;bottom:74px;font-size:52px}.ro-5{right:7%;bottom:105px;font-size:53px}.review-bubble{position:absolute;top:14px;left:14px;right:14px;background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:18px;padding:12px 14px;font-size:22px;font-weight:950;text-align:center}
+  .walk-scene{position:relative;min-height:330px;border-radius:26px;overflow:hidden;background:linear-gradient(#bfe8ff 0 56%,#d7f3c6 56% 68%,#c8b59e 68% 100%);border:1px solid #c7dce7}.sun{position:absolute;right:20px;top:18px;font-size:48px}.cloud{position:absolute;font-size:45px;opacity:.9}.cloud.one{left:12%;top:30px}.cloud.two{left:52%;top:76px}.road{position:absolute;left:0;right:0;bottom:0;height:33%;background:#c5b49d;clip-path:polygon(21% 0,79% 0,100% 100%,0 100%)}.kid{position:absolute;bottom:54px;left:4%;font-size:84px;transition:left .55s ease}.review-object{position:absolute;cursor:pointer;user-select:none;transition:.12s}.review-object:hover{transform:scale(1.08)}.ro-1{right:14%;bottom:56px;font-size:57px}.ro-2{left:8%;bottom:82px;font-size:55px}.ro-3{left:38%;bottom:38px;font-size:55px}.ro-4{right:31%;bottom:74px;font-size:52px}.ro-5{right:7%;bottom:105px;font-size:53px}.review-bubble{position:absolute;top:14px;left:14px;right:14px;background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:18px;padding:12px 14px;font-size:22px;font-weight:950;text-align:center}
   .school-front{background:linear-gradient(#bfe8ff 0 62%,#d8efbf 62%);border-radius:26px;padding:24px;min-height:310px;position:relative;overflow:hidden;text-align:center}.school-building{margin:25px auto 0;width:min(78%,520px);background:#ffdca6;border:5px solid #d69c57;border-radius:18px;padding:18px;box-shadow:0 10px 25px rgba(0,0,0,.08)}.school-sign{font-size:28px;font-weight:950;background:#fff3d2;border:2px solid #e7be7a;border-radius:12px;display:inline-block;padding:8px 14px}.school-door{font-size:84px;margin-top:10px}.teacher-row{display:flex;justify-content:center;gap:28px;align-items:flex-end;margin-top:14px}.char{font-size:64px}.name-bubble{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 12px;font-weight:950;margin-top:6px}
   .quiz-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.char-tile{min-height:155px;border:2px solid var(--line);border-radius:22px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 18px rgba(0,0,0,.05);transition:.12s}.char-big{font-size:72px;font-weight:950;line-height:1}.char-tile small{margin-top:7px;color:#789; font-weight:900}.quiz-prompt{font-size:22px;font-weight:900;color:var(--muted);text-align:center;margin-bottom:14px}.quiz-progress{display:flex;gap:6px;justify-content:center;margin:0 0 16px}.dot{width:10px;height:10px;border-radius:50%;background:#d7e3ec}.dot.on{background:var(--accent)}
   .celebrate{position:fixed;inset:0;pointer-events:none;z-index:100;overflow:hidden}.confetti{position:absolute;width:10px;height:16px;border-radius:4px;animation:fall 900ms ease-out forwards}.star-pop{position:fixed;left:50%;top:45%;transform:translate(-50%,-50%);font-size:90px;z-index:110;animation:pop 900ms ease forwards;pointer-events:none}.feedback{min-height:42px;text-align:center;padding-top:13px;font-weight:950}.feedback.good{color:var(--good)}.feedback.bad{color:var(--bad)}
@@ -72,7 +72,7 @@
 <header>
   <div class="brand"><div class="brand-icon">🌞</div><span>早上上学</span></div>
   <div class="header-right">
-    <div class="pill" aria-label="stars">⭐ <span id="starCount">0</span></div>
+    <div class="pill" aria-label="stars">⭐ <span id="starCount">0</span></div><div class="pill" aria-label="hearts">❤️ <span id="heartCount">5</span></div>
     <label class="pill" title="Show pinyin + English under each word"><span>Parent Helper</span> <input id="helperToggle" class="toggle" type="checkbox" aria-label="Parent Helper: show pinyin and English"></label>
   </div>
 </header>
@@ -102,226 +102,279 @@
 </div>
 <script>
 (() => {
-  'use strict';
+'use strict';
 
-  const T1 = {
-    "作": {p:"zuò", en:"do / make"}, "业": {p:"yè", en:"work"}, "点": {p:"diǎn", en:"o'clock / dot"},
-    "分": {p:"fēn", en:"minute / part"}, "半": {p:"bàn", en:"half"}, "找": {p:"zhǎo", en:"find"},
-    "早上": {p:"zǎoshang", en:"morning"}, "书包": {p:"shūbāo", en:"backpack"}, "作业": {p:"zuòyè", en:"homework"},
-    "校长": {p:"xiàozhǎng", en:"principal"}, "衣服": {p:"yīfu", en:"clothes"}, "袜子": {p:"wàzi", en:"socks"},
-    "鞋子": {p:"xiézi", en:"shoes"}, "六点五十分": {p:"liù diǎn wǔshí fēn", en:"6:50"}
-  };
-  const T2 = {
-    "你好": ["nǐ hǎo","hello"], "早上好":["zǎoshang hǎo","good morning"], "老师":["lǎoshī","teacher"], "上学":["shàngxué","go to school"], "小朋友":["xiǎopéngyou","child / friend"],
-    "看":["kàn","look / see"],"飞":["fēi","fly"],"有":["yǒu","have"],"我":["wǒ","I / me"],"你":["nǐ","you"],"这个":["zhège","this"],"人":["rén","person"],"上":["shàng","up / on"],"下":["xià","down / under"],"不":["bù","not"],
-    "耳朵":["ěrduo","ear"],"耳":["ěr","ear"],"眼睛":["yǎnjing","eye"],"目":["mù","eye"],"鼻子":["bízi","nose"],"嘴巴":["zuǐba","mouth"],"口":["kǒu","mouth"],"脚":["jiǎo","foot"],"足":["zú","foot"],"手":["shǒu","hand"],"牙":["yá","tooth"],"头":["tóu","head"],
-    "大的":["dà de","big"],"大":["dà","big"],"小的":["xiǎo de","small"],"小":["xiǎo","small"],"多":["duō","many"],"少":["shǎo","few"],
-    "红色":["hóngsè","red"],"黄色":["huángsè","yellow"],"蓝色":["lánsè","blue"],"圆形":["yuánxíng","circle"],"三角形":["sānjiǎoxíng","triangle"],
-    "两只":["liǎng zhī","two (animals)",],"两个":["liǎng ge","two"],"一":["yī","one"],"二":["èr","two"],"三":["sān","three"],"四":["sì","four"],"五":["wǔ","five"],"六":["liù","six"],"七":["qī","seven"],"八":["bā","eight"],"九":["jiǔ","nine"],"十":["shí","ten"],"二十":["èrshí","twenty"],"三十":["sānshí","thirty"],"四十":["sìshí","forty"],"五十":["wǔshí","fifty"],"六十":["liùshí","sixty"],"七十":["qīshí","seventy"],"八十":["bāshí","eighty"],"九十":["jiǔshí","ninety"],"百":["bǎi","one hundred"],
-    "山":["shān","mountain"],"土":["tǔ","earth"],"木":["mù","wood"],"水":["shuǐ","water"],"火":["huǒ","fire"],"田":["tián","field"],"日":["rì","sun / day"],"中":["zhōng","middle"],"月":["yuè","moon / month"],"雨":["yǔ","rain"],
-    "小鸡":["xiǎojī","chick"],"牛":["niú","cow"],"羊":["yáng","sheep"],"虫":["chóng","bug"],"马":["mǎ","horse"],"鸟":["niǎo","bird"],"鱼":["yú","fish"],"兔":["tù","rabbit"],
-    "女":["nǚ","girl / female"],"妈":["mā","mom"],"奶":["nǎi","milk / grandma in compounds"],"姐":["jiě","older sister"],"妹":["mèi","younger sister"],"父":["fù","father"],"爸":["bà","dad"],"爷":["yé","grandpa"]
-  };
+const T1 = {
+  "作": {p:"zuò", en:"do / make"}, "业": {p:"yè", en:"work"}, "点": {p:"diǎn", en:"o'clock / dot"},
+  "分": {p:"fēn", en:"minute / part"}, "半": {p:"bàn", en:"half"}, "找": {p:"zhǎo", en:"find"},
+  "早上": {p:"zǎoshang", en:"morning"}, "书包": {p:"shūbāo", en:"backpack"}, "作业": {p:"zuòyè", en:"homework"},
+  "校长": {p:"xiàozhǎng", en:"principal"}, "衣服": {p:"yīfu", en:"clothes"}, "袜子": {p:"wàzi", en:"socks"},
+  "鞋子": {p:"xiézi", en:"shoes"}, "六点五十分": {p:"liù diǎn wǔshí fēn", en:"6:50"}
+};
+const T2 = {
+  "你好":["nǐ hǎo","hello"],"早上好":["zǎoshang hǎo","good morning"],"老师":["lǎoshī","teacher"],"上学":["shàngxué","go to school"],"小朋友":["xiǎopéngyou","child / friend"],
+  "看":["kàn","look / see"],"飞":["fēi","fly"],"有":["yǒu","have"],"我":["wǒ","I / me"],"你":["nǐ","you"],"这个":["zhège","this"],"人":["rén","person"],"上":["shàng","up / on"],"下":["xià","down / under"],"不":["bù","not"],
+  "耳朵":["ěrduo","ear"],"耳":["ěr","ear"],"眼睛":["yǎnjing","eye"],"目":["mù","eye"],"鼻子":["bízi","nose"],"嘴巴":["zuǐba","mouth"],"口":["kǒu","mouth"],"脚":["jiǎo","foot"],"足":["zú","foot"],"手":["shǒu","hand"],"牙":["yá","tooth"],"头":["tóu","head"],
+  "大的":["dà de","big"],"大":["dà","big"],"小的":["xiǎo de","small"],"小":["xiǎo","small"],"多":["duō","many"],"少":["shǎo","few"],
+  "红色":["hóngsè","red"],"黄色":["huángsè","yellow"],"蓝色":["lánsè","blue"],"圆形":["yuánxíng","circle"],"三角形":["sānjiǎoxíng","triangle"],
+  "两只":["liǎng zhī","two (animals)"],"两个":["liǎng ge","two"],"一":["yī","one"],"二":["èr","two"],"三":["sān","three"],"四":["sì","four"],"五":["wǔ","five"],"六":["liù","six"],"七":["qī","seven"],"八":["bā","eight"],"九":["jiǔ","nine"],"十":["shí","ten"],"二十":["èrshí","twenty"],"三十":["sānshí","thirty"],"四十":["sìshí","forty"],"五十":["wǔshí","fifty"],"六十":["liùshí","sixty"],"七十":["qīshí","seventy"],"八十":["bāshí","eighty"],"九十":["jiǔshí","ninety"],"百":["bǎi","one hundred"],
+  "山":["shān","mountain"],"土":["tǔ","earth"],"木":["mù","wood"],"水":["shuǐ","water"],"火":["huǒ","fire"],"田":["tián","field"],"日":["rì","sun / day"],"中":["zhōng","middle"],"月":["yuè","moon / month"],"雨":["yǔ","rain"],
+  "小鸡":["xiǎojī","chick"],"牛":["niú","cow"],"羊":["yáng","sheep"],"虫":["chóng","bug"],"马":["mǎ","horse"],"鸟":["niǎo","bird"],"鱼":["yú","fish"],"兔":["tù","rabbit"],
+  "女":["nǚ","girl / female"],"妈":["mā","mom"],"奶":["nǎi","milk / grandma in compounds"],"姐":["jiě","older sister"],"妹":["mèi","younger sister"],"父":["fù","father"],"爸":["bà","dad"],"爷":["yé","grandpa"]
+};
 
-  const sceneMeta = [
-    {id:'clock', icon:'⏰', zh:'起床 · 看时间', sub:'Wake up / Clock'},
-    {id:'dress', icon:'👕', zh:'穿衣服', sub:'Get dressed'},
-    {id:'bag', icon:'🎒', zh:'装书包', sub:'Pack the backpack'},
-    {id:'walk', icon:'🌳', zh:'走路去学校', sub:'Walk to school'},
-    {id:'greet', icon:'🏫', zh:'到校打招呼', sub:'Arrive & greet'},
-    {id:'quiz', icon:'⭐', zh:'小测验', sub:'Quiz round'}
-  ];
+const sceneMeta=[
+  {id:'clock',icon:'⏰',zh:'起床 · 看时间',sub:'Wake up / Clock'},
+  {id:'dress',icon:'👕',zh:'穿衣服',sub:'Get dressed'},
+  {id:'bag',icon:'🎒',zh:'装书包',sub:'Pack the backpack'},
+  {id:'walk',icon:'🌳',zh:'走路去学校',sub:'Walk to school'},
+  {id:'greet',icon:'🏫',zh:'到校打招呼',sub:'Arrive & greet'},
+  {id:'quiz',icon:'⭐',zh:'小测验',sub:'Quiz round'}
+];
 
-  const state = {
-    scene:'home', stars:0, helper:false, clockRound:0, dressStep:0, packed:[], walkSeen:0, greetDone:false, quizRound:0, quizOrder:null,
-    voices:[], zhVoice:null, currentSpeakText:'', currentAudioButton:null
-  };
+const state={
+  scene:'home',stars:0,hearts:5,helper:false,
+  clockCorrect:0,dressRound:0,dressStep:0,packed:[],bagRound:0,walkSeen:0,
+  greetStep:0,quizMode:'chars',quizRound:0,quizOrder:null,
+  voices:[],zhVoice:null,currentSpeakText:'',currentAudioButton:null
+};
+const $=s=>document.querySelector(s);
+const app=$('#app'),mapGrid=$('#mapGrid'),starCount=$('#starCount'),heartCount=$('#heartCount'),
+  helperToggle=$('#helperToggle'),sceneTitle=$('#sceneTitle'),sceneSub=$('#sceneSub'),sceneBody=$('#sceneBody'),
+  sceneAudio=$('#sceneAudio'),backBtn=$('#backBtn');
 
-  const $ = sel => document.querySelector(sel);
-  const app = $('#app');
-  const mapGrid = $('#mapGrid');
-  const starCount = $('#starCount');
-  const helperToggle = $('#helperToggle');
-  const sceneTitle = $('#sceneTitle');
-  const sceneSub = $('#sceneSub');
-  const sceneBody = $('#sceneBody');
-  const sceneAudio = $('#sceneAudio');
-  const backBtn = $('#backBtn');
+function escapeHtml(s){return String(s).replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function dataFor(w){return T1[w]||T2[w]||null}
+function helperHtml(word,data){
+  if(!state.helper||!data)return '';
+  const [p,en]=Array.isArray(data)?data:[data.p,data.en];
+  return `<div class="parent-data">${escapeHtml(p)} · ${escapeHtml(en)}</div>`;
+}
+function speak(text,button){
+  state.currentSpeakText=text; state.currentAudioButton=button||null;
+  if(button){button.classList.add('speaking');setTimeout(()=>button.classList.remove('speaking'),420);}
+  if(!('speechSynthesis'in window))return fallbackCue(text);
+  const u=new SpeechSynthesisUtterance(text);u.lang='zh-CN';u.rate=.82;u.pitch=1.05;if(state.zhVoice)u.voice=state.zhVoice;
+  window.speechSynthesis.cancel();window.speechSynthesis.speak(u);
+}
+function fallbackCue(text){
+  const b=state.currentAudioButton;if(!b)return;b.textContent='🔊';b.title='No Chinese voice found — use the pinyin helper';
+  b.animate([{transform:'scale(1)'},{transform:'scale(1.15)'},{transform:'scale(1)'}],{duration:500});
+}
+function findVoice(){
+  if(!('speechSynthesis'in window))return;
+  state.voices=speechSynthesis.getVoices();
+  state.zhVoice=state.voices.find(v=>/^zh-CN$/i.test(v.lang))||state.voices.find(v=>/^zh/i.test(v.lang))||null;
+  document.body.classList.toggle('no-zh-voice',!state.zhVoice);
+}
+if('speechSynthesis'in window){speechSynthesis.onvoiceschanged=findVoice;findVoice();}
 
-  function escapeHtml(s){return String(s).replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\\':'&#92;','"':'&quot;'}[c]));}
-  function helperHtml(word, data){
-    if(!state.helper || !data) return '';
-    const [p,en] = Array.isArray(data) ? data : [data.p,data.en];
-    return `<div class="parent-data">${escapeHtml(p)} · ${escapeHtml(en)}</div>`;
+function updateHearts(){heartCount.textContent=state.hearts;}
+function refillHearts(){state.hearts=5;updateHearts();}
+function loseHeart(el){
+  state.hearts--;updateHearts();wrong(el);
+  if(state.hearts<=0){
+    setTimeout(showGameOver,400);
+    return true;
   }
-  function speak(text, button){
-    state.currentSpeakText = text;
-    state.currentAudioButton = button || null;
-    if (button){ button.classList.add('speaking'); setTimeout(()=>button.classList.remove('speaking'),420); }
-    if(!('speechSynthesis' in window)) return fallbackCue(text);
-    const u = new SpeechSynthesisUtterance(text); u.lang='zh-CN'; u.rate=.82; u.pitch=1.05;
-    if(state.zhVoice) u.voice=state.zhVoice;
-    window.speechSynthesis.cancel(); window.speechSynthesis.speak(u);
-  }
-  function fallbackCue(text){
-    // A friendly visual cue when the browser has no Chinese voice.
-    const b = state.currentAudioButton; if(!b) return;
-    b.textContent='🔊'; b.title='No Chinese voice found — use the pinyin helper';
-    b.animate([{transform:'scale(1)'},{transform:'scale(1.15)'},{transform:'scale(1)'}],{duration:500});
-  }
-  function findVoice(){
-    if(!('speechSynthesis' in window)) return;
-    state.voices = window.speechSynthesis.getVoices();
-    state.zhVoice = state.voices.find(v => /^zh-CN$/i.test(v.lang)) || state.voices.find(v=>/^zh/i.test(v.lang)) || null;
-    document.body.classList.toggle('no-zh-voice', !state.zhVoice);
-  }
-  if('speechSynthesis' in window){ window.speechSynthesis.onvoiceschanged=findVoice; findVoice(); }
+  return false;
+}
+function showGameOver(){
+  speechSynthesis?.cancel?.();
+  state.scene='home';state.hearts=5;state.stars=0;state.clockCorrect=0;state.dressRound=0;state.dressStep=0;state.packed=[];state.bagRound=0;state.walkSeen=0;state.greetStep=0;state.quizMode='chars';state.quizRound=0;state.quizOrder=null;
+  starCount.textContent='0';updateHearts();showScreen('home');renderMap();
+  sceneBody.innerHTML='';
+  // Put a clear restart card into the home screen temporarily.
+  const old=document.getElementById('gameOverCard');if(old)old.remove();
+  const card=document.createElement('div');card.id='gameOverCard';card.className='result';card.style.marginTop='16px';
+  card.innerHTML='<div class="result-stars">❤️‍🩹</div><h2>Try Again!</h2><p>Oops! You ran out of hearts. The morning starts over from the beginning.</p><button class="small-btn" id="restartBtn">🌞 Start Again</button>';
+  $('#home').appendChild(card);
+  $('#restartBtn').onclick=()=>{card.remove();openScene('clock');};
+}
+function addStar(){
+  state.stars++;starCount.textContent=state.stars;
+  const pop=document.createElement('div');pop.className='star-pop';pop.textContent='⭐';$('#celebrate').appendChild(pop);
+  for(let i=0;i<20;i++){const c=document.createElement('div');c.className='confetti';c.style.left=(35+Math.random()*30)+'%';c.style.top=(32+Math.random()*12)+'%';c.style.background=['#ff6b6b','#ffd44d','#5dc5ff','#64d890','#b28cff'][Math.floor(Math.random()*5)];c.style.transform='rotate('+Math.random()*280+'deg)';c.style.animationDelay=(Math.random()*120)+'ms';$('#celebrate').appendChild(c);}
+  setTimeout(()=>$('#celebrate').innerHTML='',1000);
+  try{new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQAAAAA=').play().catch(()=>{});}catch(e){}
+}
+function wrong(el){el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');}
+function showScreen(name){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));(name==='home'?$('#home'):$('#scene')).classList.add('active');}
+function renderMap(){
+  mapGrid.innerHTML=sceneMeta.map((s,i)=>`<button class="scene-card" data-scene="${s.id}" aria-label="${escapeHtml(s.sub)}: ${escapeHtml(s.zh)}"><span class="scene-no">${i+1}</span><div class="scene-icon">${s.icon}</div><div class="scene-title">${s.zh}</div><div class="scene-sub">${s.sub}</div></button>`).join('');
+  mapGrid.querySelectorAll('.scene-card').forEach(b=>b.onclick=()=>openScene(b.dataset.scene));
+}
+function setSceneHeader(meta){sceneTitle.textContent=meta.zh;sceneSub.textContent=meta.sub;sceneAudio.onclick=()=>speak(meta.zh,sceneAudio);}
+function openScene(id){
+  const meta=sceneMeta.find(x=>x.id===id);state.scene=id;state.currentAudioButton=sceneAudio;setSceneHeader(meta);showScreen('scene');
+  if(id==='clock')renderClock();
+  if(id==='dress')renderDress();
+  if(id==='bag')renderBag();
+  if(id==='walk')renderWalk();
+  if(id==='greet')renderGreet();
+  if(id==='quiz')renderQuiz();
+}
+backBtn.onclick=()=>{state.scene='home';showScreen('home');renderMap();};
+helperToggle.onchange=()=>{state.helper=helperToggle.checked;app.classList.toggle('helper-on',state.helper);if(state.scene!=='home')openScene(state.scene);};
 
-  function addStar(){
-    state.stars++; starCount.textContent=state.stars;
-    const pop=document.createElement('div'); pop.className='star-pop'; pop.textContent='⭐'; $('#celebrate').appendChild(pop);
-    for(let i=0;i<20;i++){
-      const c=document.createElement('div'); c.className='confetti'; c.textContent='';
-      c.style.left=(35+Math.random()*30)+'%'; c.style.top=(32+Math.random()*12)+'%'; c.style.background=['#ff6b6b','#ffd44d','#5dc5ff','#64d890','#b28cff'][Math.floor(Math.random()*5)];
-      c.style.transform='rotate('+Math.random()*280+'deg)'; c.style.animationDelay=(Math.random()*120)+'ms'; $('#celebrate').appendChild(c);
+// ---------- CLOCK ----------
+const hourMinuteTimes=[
+ ['1:30','一点半','yī diǎn bàn',1,30],['10:20','十点二十分','shí diǎn èrshí fēn',10,20],['5:15','五点十五分','wǔ diǎn shíwǔ fēn',5,15],
+ ['7:40','七点四十分','qī diǎn sìshí fēn',7,40],['3:05','三点五分','sān diǎn wǔ fēn',3,5],['9:30','九点半','jiǔ diǎn bàn',9,30],
+ ['12:10','十二点十分','shíèr diǎn shí fēn',12,10],['4:45','四点四十五分','sì diǎn sìshíwǔ fēn',4,45],['8:25','八点二十五分','bā diǎn èrshíwǔ fēn',8,25],
+ ['11:50','十一点五十分','shíyī diǎn wǔshí fēn',11,50],['2:30','两点半','liǎng diǎn bàn',2,30],['6:15','六点十五分','liù diǎn shíwǔ fēn',6,15],
+ ['1:05','一点五分','yī diǎn wǔ fēn',1,5],['10:30','十点半','shí diǎn bàn',10,30],['5:50','五点五十分','wǔ diǎn wǔshí fēn',5,50],
+ ['7:20','七点二十分','qī diǎn èrshí fēn',7,20],['3:30','三点半','sān diǎn bàn',3,30],['9:45','九点四十五分','jiǔ diǎn sìshíwǔ fēn',9,45],
+ ['12:25','十二点二十五分','shíèr diǎn èrshíwǔ fēn',12,25],['4:10','四点十分','sì diǎn shí fēn',4,10],['8:50','八点五十分','bā diǎn wǔshí fēn',8,50],
+ ['11:15','十一点十五分','shíyī diǎn shíwǔ fēn',11,15],['2:40','两点四十分','liǎng diǎn sìshí fēn',2,40],['6:30','六点半','liù diǎn bàn',6,30],
+ ['1:20','一点二十分','yī diǎn èrshí fēn',1,20],['10:45','十点四十五分','shí diǎn sìshíwǔ fēn',10,45],['5:25','五点二十五分','wǔ diǎn èrshíwǔ fēn',5,25],
+ ['7:55','七点五十五分','qī diǎn wǔshíwǔ fēn',7,55],['3:15','三点十五分','sān diǎn shíwǔ fēn',3,15],['9:10','九点十分','jiǔ diǎn shí fēn',9,10],
+ ['12:40','十二点四十分','shíèr diǎn sìshí fēn',12,40],['4:30','四点半','sì diǎn bàn',4,30],['8:05','八点五分','bā diǎn wǔ fēn',8,5],
+ ['11:35','十一点三十五分','shíyī diǎn sānshíwǔ fēn',11,35],['2:05','两点五分','liǎng diǎn wǔ fēn',2,5],['6:45','六点四十五分','liù diǎn sìshíwǔ fēn',6,45],
+ ['1:50','一点五十分','yī diǎn wǔshí fēn',1,50],['10:15','十点十五分','shí diǎn shíwǔ fēn',10,15],['5:40','五点四十分','wǔ diǎn sìshí fēn',5,40],
+ ['7:30','七点半','qī diǎn bàn',7,30],['3:50','三点五十分','sān diǎn wǔshí fēn',3,50],['9:25','九点二十五分','jiǔ diǎn èrshíwǔ fēn',9,25],
+ ['12:05','十二点五分','shíèr diǎn wǔ fēn',12,5],['4:55','四点五十五分','sì diǎn wǔshíwǔ fēn',4,55],['8:35','八点三十五分','bā diǎn sānshíwǔ fēn',8,35],
+ ['11:30','十一点半','shíyī diǎn bàn',11,30],['2:15','两点十五分','liǎng diǎn shíwǔ fēn',2,15],['6:05','六点五分','liù diǎn wǔ fēn',6,5],
+ ['1:40','一点四十分','yī diǎn sìshí fēn',1,40],['10:05','十点五分','shí diǎn wǔ fēn',10,5],['5:30','五点半','wǔ diǎn bàn',5,30]
+];
+function clockSvg(h,m){
+  const hourDeg=(h%12)*30+m*.5,minDeg=m*6;let nums='';
+  for(let n=1;n<=12;n++){const ang=(n*30-90)*Math.PI/180,r=39,x=50+Math.cos(ang)*r,y=50+Math.sin(ang)*r;nums+=`<span class="number" style="left:${x}%;top:${y}%;transform:translate(-50%,-50%)">${n}</span>`;}
+  return `<div class="clock" aria-label="analog clock ${h}:${String(m).padStart(2,'0')}">${nums}<div class="hand hour tick" style="transform:rotate(${hourDeg-90}deg)"></div><div class="hand minute tick" style="transform:rotate(${minDeg-90}deg)"></div><div class="center-dot"></div></div>`;
+}
+function renderClock(){
+  if(state.clockCorrect>=10){completeLevel('Clock Complete!','Great time telling! Now get dressed 👕','dress');return;}
+  const idx=Math.floor(Math.random()*hourMinuteTimes.length),r=hourMinuteTimes[idx];
+  let otherIdxs=hourMinuteTimes.map((_,i)=>i).filter(i=>i!==idx).sort(()=>Math.random()-.5).slice(0,2);
+  const choices=[r[0],...otherIdxs.map(i=>hourMinuteTimes[i][0])].sort(()=>Math.random()-.5);
+  sceneBody.innerHTML=`<div class="game-card"><div class="prompt"><div class="prompt-main">${r[1]}</div>${helperHtml(r[1],{p:r[2],en:r[0]})}<div class="prompt-note">Listen, then choose the matching digital time.</div></div><div class="clock-wrap"><div>${clockSvg(r[3],r[4])}</div><div class="digital" id="digitalTarget">? : ?</div></div><div class="options">${choices.map(x=>`<button class="option" data-time="${x}">${x}</button>`).join('')}</div><div class="feedback" id="feedback">⭐ ${state.clockCorrect}/10</div></div>`;
+  sceneAudio.onclick=()=>speak(r[1],sceneAudio);
+  sceneBody.querySelectorAll('.option').forEach(b=>b.onclick=()=>{
+    if(b.dataset.time===r[0]){
+      $('#digitalTarget').textContent=r[0];addStar();state.clockCorrect++;
+      $('#feedback').textContent=`Nice! ⭐ ${state.clockCorrect}/10`;$('#feedback').className='feedback good';
+      setTimeout(renderClock,500);
+    }else{
+      if(loseHeart(b))return;$('#feedback').textContent='Not quite — listen again and try another.';$('#feedback').className='feedback bad';speak(r[1],sceneAudio);
     }
-    setTimeout(()=>$('#celebrate').innerHTML='',1000);
-    try{ new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQAAAAA=').play().catch(()=>{}); }catch(e){}
-  }
-  function wrong(el){ el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); }
-  function showScreen(name){
-    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-    const target = name==='home'?$('#home'):$('#scene'); target.classList.add('active');
-  }
+  });
+  // Best-effort automatic speech; browser autoplay policy may still block it.
+  setTimeout(()=>speak(r[1],sceneAudio),120);
+}
 
-  function renderMap(){
-    mapGrid.innerHTML = sceneMeta.map((s,i)=>`<button class="scene-card" data-scene="${s.id}" aria-label="${escapeHtml(s.sub)}: ${escapeHtml(s.zh)}"><span class="scene-no">${i+1}</span><div class="scene-icon">${s.icon}</div><div class="scene-title">${s.zh}</div><div class="scene-sub">${s.sub}</div></button>`).join('');
-    mapGrid.querySelectorAll('.scene-card').forEach(b=>b.addEventListener('click',()=>openScene(b.dataset.scene)));
-  }
+// ---------- DRESS ----------
+const dressOrder=[['衣服','👕',T1['衣服']],['袜子','🧦',T1['袜子']],['鞋子','👟',T1['鞋子']]];
+function renderDress(){
+  const next=dressOrder[state.dressStep];
+  const options=dressOrder.map(x=>x).sort(()=>Math.random()-.5);
+  const worn=dressOrder.slice(0,state.dressStep);
+  sceneBody.innerHTML=`<div class="game-card"><div class="prompt"><div class="prompt-main">${next[0]}</div>${helperHtml(next[0],next[2])}<div class="prompt-note">Put on all three: 衣服 → 袜子 → 鞋子. Round ${state.dressRound+1}/3.</div></div><div class="dress-stage"><div class="wear-badges">${dressOrder.map(x=>`<span class="wear ${worn.some(w=>w[0]===x[0])?'done':''}">${x[0]}</span>`).join('')}</div><div class="person"><div class="person-base">🧒</div>${worn.map(x=>`<div class="wear-layer ${x[0]==='衣服'?'wear-clothes':x[0]==='袜子'?'wear-socks':'wear-shoes'}">${x[1]}</div>`).join('')}</div></div><div class="choice-grid" style="margin-top:16px">${options.map(x=>`<button class="item-card" data-word="${x[0]}"><div class="item-word">${x[0]}</div>${helperHtml(x[0],x[2])}</button>`).join('')}</div><div class="feedback" id="feedback">Round ${state.dressRound+1}/3</div></div>`;
+  sceneAudio.onclick=()=>speak(next[0],sceneAudio);
+  setTimeout(()=>speak(next[0],sceneAudio),120);
+  sceneBody.querySelectorAll('.item-card').forEach(b=>b.onclick=()=>{
+    if(b.dataset.word===next[0]){
+      addStar();state.dressStep++;
+      if(state.dressStep<3){$('#feedback').textContent='On it goes!';$('#feedback').className='feedback good';setTimeout(renderDress,500);}
+      else{
+        state.dressRound++;state.dressStep=0;$('#feedback').textContent='All dressed!';$('#feedback').className='feedback good';
+        if(state.dressRound>=3)setTimeout(()=>completeLevel('All Dressed!','Three full outfits! Now pack the backpack 🎒','bag'),650);
+        else setTimeout(renderDress,650);
+      }
+    }else{if(!loseHeart(b)){$('#feedback').textContent='Not that one — listen again.';$('#feedback').className='feedback bad';speak(next[0],sceneAudio);}}
+  });
+}
 
-  function setSceneHeader(meta){
-    sceneTitle.textContent=meta.zh; sceneSub.textContent=meta.sub;
-    sceneAudio.onclick=()=>speak(meta.zh,sceneAudio);
-  }
+// ---------- BAG ----------
+const bagItems=[['作业','📄',T1['作业']],['水','💧',T2['水']],['衣服','👕',T1['衣服']],['袜子','🧦',T1['袜子']],['鞋子','👟',T1['鞋子']],['书包','🎒',T1['书包']]];
+function renderBag(){
+  if(state.bagRound>=3){completeLevel('Backpack Ready!','Three things packed. Time to walk to school 🌳','walk');return;}
+  const target=bagItems.filter(x=>!state.packed.includes(x[0])).sort(()=>Math.random()-.5)[0];
+  const options=bagItems.slice().sort(()=>Math.random()-.5);
+  sceneBody.innerHTML=`<div class="game-card"><div class="prompt"><div class="prompt-main">找 ${target[0]}</div>${helperHtml(target[0],target[2])}<div class="prompt-note">Find the right thing and put it in the backpack. Round ${state.bagRound+1}/3.</div></div><div class="bag"><div class="bag-icon">🎒</div></div><div class="bag-items">${state.packed.map(w=>`<span class="packed">✓ ${w}</span>`).join('')}</div><div class="choice-grid" style="margin-top:16px">${options.map(x=>`<button class="item-card" data-word="${x[0]}"><div class="item-word">${x[0]}</div>${helperHtml(x[0],x[2])}</button>`).join('')}</div><div class="feedback" id="feedback">🎒 ${state.bagRound}/3 packed</div></div>`;
+  sceneAudio.onclick=()=>speak('找 '+target[0],sceneAudio);setTimeout(()=>speak('找 '+target[0],sceneAudio),120);
+  sceneBody.querySelectorAll('.item-card').forEach(b=>b.onclick=()=>{
+    if(b.dataset.word===target[0]){
+      addStar();state.packed.push(target[0]);state.bagRound++;$('#feedback').textContent=`Packed! 🎒 ${state.bagRound}/3`;$(
+        '#feedback').className='feedback good';setTimeout(renderBag,550);
+    }else{if(!loseHeart(b)){speak('找 '+target[0],sceneAudio);}}
+  });
+}
 
-  function openScene(id){
-    state.scene=id; state.currentAudioButton=sceneAudio;
-    const meta=sceneMeta.find(x=>x.id===id); setSceneHeader(meta); showScreen('scene');
-    if(id==='clock') renderClock();
-    if(id==='dress') renderDress();
-    if(id==='bag') renderBag();
-    if(id==='walk') renderWalk();
-    if(id==='greet') renderGreet();
-    if(id==='quiz'){ if(state.quizRound>=quizChars.length){state.quizRound=0; state.quizOrder=null;} renderQuiz(); }
-  }
-  backBtn.onclick=()=>{state.scene='home';showScreen('home');renderMap()};
-  helperToggle.addEventListener('change',()=>{state.helper=helperToggle.checked; app.classList.toggle('helper-on',state.helper); if(state.scene!=='home') openScene(state.scene)});
+// ---------- WALK ----------
+const walkPool=[
+ ['小鸡','🐥',T2['小鸡']],['牛','🐄',T2['牛']],['羊','🐑',T2['羊']],['鸟','🐦',T2['鸟']],['鱼','🐟',T2['鱼']],['兔','🐰',T2['兔']],
+ ['红色','🔴',T2['红色']],['黄色','🟡',T2['黄色']],['蓝色','🔵',T2['蓝色']],['山','⛰️',T2['山']],['水','💧',T2['水']],['木','🪵',T2['木']],['圆形','⚪',T2['圆形']],['三角形','🔺',T2['三角形']]
+];
+function renderWalk(){
+  const target=walkPool[state.walkSeen%walkPool.length],progress=state.walkSeen, left=Math.min(4+progress*13,72);
+  const distractors=walkPool.filter(x=>x[0]!==target[0]).sort(()=>Math.random()-.5).slice(0,4);
+  const objects=[target,...distractors].sort(()=>Math.random()-.5);
+  sceneBody.innerHTML=`<div class="game-card"><div class="prompt"><div class="prompt-main">看！${target[0]}</div>${helperHtml(target[0],target[2])}<div class="prompt-note">Find the matching object. Each correct answer moves you closer to school! ${progress}/6</div></div><div class="walk-scene"><div class="sun">☀️</div><div class="cloud one">☁️</div><div class="cloud two">☁️</div><div class="road"></div><div class="kid" style="left:${left}%">🧒🎒</div><div class="review-bubble">${target[0]}</div>${objects.map((x,i)=>`<div class="review-object ro-${i+1}" data-word="${x[0]}">${x[1]}</div>`).join('')}<div style="position:absolute;right:4%;bottom:18px;font-size:54px">🏫</div></div><div class="feedback" id="feedback">🚶 ${progress}/6</div></div>`;
+  sceneAudio.onclick=()=>speak('看 '+target[0],sceneAudio);setTimeout(()=>speak('看 '+target[0],sceneAudio),120);
+  sceneBody.querySelectorAll('.review-object').forEach(el=>el.onclick=()=>{
+    if(el.dataset.word===target[0]){
+      addStar();state.walkSeen++;$('#feedback').textContent=`Found it! 🚶 ${state.walkSeen}/6`;$('#feedback').className='feedback good';
+      setTimeout(()=>{if(state.walkSeen>=6)completeLevel('You Arrived!','You made it all the way to school 🏫','greet');else renderWalk();},500);
+    }else{if(!loseHeart(el)){speak('看 '+target[0],sceneAudio);}}
+  });
+}
 
-  // --- Scene 1: clock ---
-  const clockRounds=[
-    {zh:'六点五十分',p:'liù diǎn wǔshí fēn',digital:'6:50',h:6,m:50,kind:'数字时间'},
-    {zh:'两点半',p:'liǎng diǎn bàn',digital:'2:30',h:2,m:30,kind:'半点'},
-    {zh:'六点半',p:'liù diǎn bàn',digital:'6:30',h:6,m:30,kind:'半点'}
+// ---------- GREET ----------
+function renderGreet(){
+  const steps=[
+    {prompt:'早上好！',target:'老师',say:'早上好！',text:'Greet your teacher.'},
+    {prompt:'你好！',target:'小朋友',say:'你好！',text:'Say hello to your classmate.'},
+    {prompt:'找 校长',target:'校长',say:'你好！',text:'Find the principal and say hello.'}
   ];
-  function clockSvg(h,m){
-    const hourDeg=(h%12)*30+m*.5, minDeg=m*6;
-    let nums=''; for(let n=1;n<=12;n++){ const ang=(n*30-90)*Math.PI/180; const r=39; const x=50+Math.cos(ang)*r, y=50+Math.sin(ang)*r; nums+=`<span class="number" style="left:${x}%;top:${y}%;transform:translate(-50%,-50%)">${n}</span>`; }
-    return `<div class="clock" aria-label="analog clock ${h}:${String(m).padStart(2,'0')}">${nums}<div class="hand hour tick" style="transform:rotate(${hourDeg-90}deg)"></div><div class="hand minute tick" style="transform:rotate(${minDeg-90}deg)"></div><div class="center-dot"></div></div>`;
-  }
-  function renderClock(){
-    const r=clockRounds[state.clockRound%clockRounds.length];
-    const choices=[r.digital, clockRounds[(state.clockRound+1)%3].digital, clockRounds[(state.clockRound+2)%3].digital].sort(()=>Math.random()-.5);
-    sceneBody.innerHTML=`<div class="game-card"><div class="prompt"><div class="prompt-main">${r.zh}</div>${helperHtml(r.zh,{p:r.p,en:r.digital})}<div class="prompt-note">Listen, then tap the matching clock time.</div></div><div class="clock-wrap"><div>${clockSvg(r.h,r.m)}</div><div class="digital" id="digitalTarget">? : ?</div></div><div class="options">${choices.map(x=>`<button class="option" data-time="${x}">${x}</button>`).join('')}</div><div class="feedback" id="feedback"></div></div>`;
-    sceneAudio.onclick=()=>speak(r.zh,sceneAudio);
-    sceneBody.querySelectorAll('.option').forEach(b=>b.addEventListener('click',()=>{
-      if(b.dataset.time===r.digital){$('#digitalTarget').textContent=r.digital; addStar(); $('#feedback').textContent='Nice! Next one.'; $('#feedback').className='feedback good'; setTimeout(()=>{state.clockRound++;renderClock()},650)}
-      else { wrong(b); $('#feedback').textContent='Not quite — tap 🔊 to listen again.'; $('#feedback').className='feedback bad'; speak(r.zh,sceneAudio); }
-    }));
-  }
+  const s=steps[state.greetStep];
+  sceneBody.innerHTML=`<div class="game-card"><div class="prompt"><div class="prompt-main">${s.prompt}</div>${helperHtml(s.prompt,dataFor(s.prompt))}<div class="prompt-note">${s.text}</div></div><div class="school-front"><div class="school-building"><div class="school-sign">🏫 上学</div><div class="school-door">🚪</div></div><div class="teacher-row"><button class="item-card" id="teacherBtn"><div class="char">🧑‍🏫</div><div class="name-bubble">老师</div>${helperHtml('老师',T2['老师'])}</button><button class="item-card" id="friendBtn"><div class="char">🧒</div><div class="name-bubble">小朋友</div>${helperHtml('小朋友',T2['小朋友'])}</button><button class="item-card" id="principalBtn"><div class="char">🧑‍💼</div><div class="name-bubble">校长</div>${helperHtml('校长',T1['校长'])}</button></div></div><div class="feedback" id="feedback">👋 Step ${state.greetStep+1}/3</div></div>`;
+  sceneAudio.onclick=()=>speak(s.say,sceneAudio);setTimeout(()=>speak(s.say,sceneAudio),120);
+  const btns={teacherBtn:'老师',friendBtn:'小朋友',principalBtn:'校长'};
+  Object.entries(btns).forEach(([id,word])=>$('#'+id).onclick=()=>{
+    if(word===s.target){
+      speak(s.say);addStar();$('#feedback').textContent='Great greeting! 👋';$('#feedback').className='feedback good';
+      state.greetStep++;setTimeout(()=>{if(state.greetStep>=3)completeLevel('Welcome to School!','You greeted everyone. Time for the final quiz ⭐','quiz');else renderGreet();},600);
+    }else{if(!loseHeart($('#'+id))){$('#feedback').textContent='Try the person the prompt asks for.';$('#feedback').className='feedback bad';}}
+  });
+}
 
-  // --- Scene 2: dressing ---
-  const dressOrder=[['衣服','👕',T1['衣服']],['袜子','🧦',T1['袜子']],['鞋子','👟',T1['鞋子']]];
-  function renderDress(){
-    const next=dressOrder[state.dressStep%3];
-    const options=dressOrder.filter((_,i)=>i!==state.dressStep%3).concat([next]).sort(()=>Math.random()-.5);
-    sceneBody.innerHTML=`<div class="game-card"><div class="prompt"><div class="prompt-main">${next[0]}</div>${helperHtml(next[0],next[2])}<div class="prompt-note">Get dressed in order — tap the next thing to put on: clothes → socks → shoes.</div></div><div class="dress-stage"><div class="wear-badges">${dressOrder.map((x,i)=>`<span class="wear ${i<state.dressStep?'done':''}">${x[1]} ${x[0]}</span>`).join('')}</div><div class="person">🧒</div></div><div class="choice-grid" style="margin-top:16px">${options.map(x=>`<button class="item-card" data-word="${x[0]}"><div class="item-emoji">${x[1]}</div><div class="item-word">${x[0]}</div>${helperHtml(x[0],x[2])}</button>`).join('')}</div><div class="feedback" id="feedback"></div></div>`;
-    sceneAudio.onclick=()=>speak(next[0],sceneAudio);
-    sceneBody.querySelectorAll('.item-card').forEach(b=>b.addEventListener('click',()=>{
-      if(b.dataset.word===next[0]){ addStar(); state.dressStep++; $('#feedback').textContent=state.dressStep<3?'On it goes!':'All dressed!'; $('#feedback').className='feedback good'; if(state.dressStep<3) setTimeout(renderDress,550); else setTimeout(()=>showMiniResult('All Dressed!','Now let\'s pack the backpack 🎒'),650)}
-      else wrong(b);
-    }));
+// ---------- QUIZ: CHARACTERS + COMBINATIONS ----------
+const quizChars=['作','业','点','分','半','找'];
+const quizWords=['早上','书包','作业','校长','衣服','袜子','鞋子'];
+function shuffled(a){return a.slice().sort(()=>Math.random()-.5);}
+function renderQuiz(){
+  if(state.quizMode==='chars'&&state.quizRound>=quizChars.length){
+    state.quizMode='words';state.quizRound=0;state.quizOrder=null;
   }
+  if(state.quizMode==='words'&&state.quizRound>=quizWords.length){showFinal();return;}
+  const list=state.quizMode==='chars'?quizChars:quizWords;
+  if(!state.quizOrder)state.quizOrder=shuffled(list);
+  const target=state.quizOrder[state.quizRound],options=shuffled(list);
+  const title=state.quizMode==='chars'?'Part 1 · Characters':'Part 2 · Character Combinations';
+  sceneBody.innerHTML=`<div class="game-card"><div class="quiz-prompt">${title}<br>Listen, then tap what you hear.</div><div class="quiz-progress">${list.map((_,i)=>`<span class="dot ${i<=state.quizRound?'on':''}"></span>`).join('')}</div><div class="prompt"><button class="audio" id="quizAudio" style="font-size:26px;padding:13px 22px">🔊 Listen again</button><div class="helper" style="margin-top:10px">${helperHtml(target,dataFor(target))}</div></div><div class="${state.quizMode==='chars'?'quiz-grid':'choice-grid'}">${options.map(w=>`<button class="${state.quizMode==='chars'?'char-tile':'item-card'}" data-word="${w}">${state.quizMode==='chars'?`<div class="char-big">${w}</div>`:`<div class="item-word">${w}</div>`}${helperHtml(w,dataFor(w))}</button>`).join('')}</div><div class="feedback" id="feedback"></div></div>`;
+  $('#quizAudio').onclick=()=>speak(target,$('#quizAudio'));setTimeout(()=>speak(target,$('#quizAudio')),100);
+  sceneBody.querySelectorAll('[data-word]').forEach(b=>b.onclick=()=>{
+    if(b.dataset.word===target){
+      addStar();$('#feedback').textContent='Awesome! ⭐';$('#feedback').className='feedback good';
+      setTimeout(()=>{state.quizRound++;renderQuiz();},500);
+    }else{if(!loseHeart(b)){wrong(b);}}
+  });
+}
+function showFinal(){
+  sceneBody.innerHTML=`<div class="result"><div class="result-stars">⭐⭐⭐⭐</div><h2>Morning Complete!</h2><p>You practiced 6 characters and 7 character combinations:</p><p style="font-size:28px;font-weight:950">早上 · 书包 · 作业 · 校长 · 衣服 · 袜子 · 鞋子</p><p style="font-size:30px;color:#d99700;font-weight:950">Stars this round: ${state.stars}</p><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px"><button class="small-btn" id="homeDone">🏠 Back to Start</button><button class="small-btn" id="redoQuiz">🔁 Play Again</button></div></div>`;
+  $('#homeDone').onclick=()=>{state.scene='home';showScreen('home');renderMap();};
+  $('#redoQuiz').onclick=()=>{state.quizMode='chars';state.quizRound=0;state.quizOrder=null;openScene('quiz');};
+}
+function completeLevel(title,msg,next){
+  refillHearts();
+  sceneBody.innerHTML=`<div class="result"><div class="result-stars">⭐</div><h2>${title}</h2><p>${msg}</p><p>❤️ Hearts refilled to 5!</p><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px"><button class="small-btn" id="nextMap">🗺️ Level Map</button><button class="small-btn" id="nextScene">➡️ Next Level</button></div></div>`;
+  $('#nextMap').onclick=()=>{state.scene='home';showScreen('home');renderMap();};
+  $('#nextScene').onclick=()=>openScene(next);
+}
 
-  // --- Scene 3: backpack ---
-  const bagItems=[['作业','📄',T1['作业']],['水','💧',T2['水']],['衣服','👕',T1['衣服']],['袜子','🧦',T1['袜子']],['鞋子','👟',T1['鞋子']]];
-  const bagTargets=[['作业','zuòyè'],['衣服','yīfu'],['水','shuǐ']];
-  function renderBag(){
-    const target=bagTargets[state.packed.length%bagTargets.length];
-    const options=bagItems.sort(()=>Math.random()-.5);
-    sceneBody.innerHTML=`<div class="game-card"><div class="prompt"><div class="prompt-main">找 ${target[0]}</div>${helperHtml(target[0], T1[target[0]] || T2[target[0]] || ['shū','book'])}<div class="prompt-note">"找" means "find." Listen, then tap the right item to pack it.</div></div><div class="bag"><div class="bag-icon">🎒</div></div><div class="bag-items">${state.packed.map(w=>`<span class="packed">✓ ${w}</span>`).join('')}</div><div class="choice-grid" style="margin-top:16px">${options.map(x=>`<button class="item-card" data-word="${x[0]}"><div class="item-emoji">${x[1]}</div><div class="item-word">${x[0]}</div>${helperHtml(x[0],x[2])}</button>`).join('')}</div><div class="feedback" id="feedback"></div></div>`;
-    sceneAudio.onclick=()=>speak('找 '+target[0],sceneAudio);
-    sceneBody.querySelectorAll('.item-card').forEach(b=>b.addEventListener('click',()=>{
-      if(b.dataset.word===target[0]){ addStar(); state.packed.push(target[0]); $('#feedback').textContent='Packed!'; $('#feedback').className='feedback good'; if(state.packed.length<3) setTimeout(renderBag,500); else setTimeout(()=>showMiniResult('Backpack Ready!','Now let\'s walk to school 🌳'),650)}
-      else {wrong(b); speak('找 '+target[0],sceneAudio)}
-    }));
-  }
-
-  // --- Scene 4: walk review ---
-  const walkSet=[
-    ['小鸡','🐥',T2['小鸡']],['牛','🐄',T2['牛']],['羊','🐑',T2['羊']],['鸟','🐦',T2['鸟']],['鱼','🐟',T2['鱼']],['兔','🐰',T2['兔']],
-    ['红色','🔴',T2['红色']],['黄色','🟡',T2['黄色']],['蓝色','🔵',T2['蓝色']],['山','⛰️',T2['山']],['水','💧',T2['水']],['木','🪵',T2['木']],['圆形','⚪',T2['圆形']],['三角形','🔺',T2['三角形']]
-  ].sort(()=>Math.random()-.5).slice(0,7);
-  function renderWalk(){
-    const target=walkSet[state.walkSeen%walkSet.length];
-    sceneBody.innerHTML=`<div class="game-card"><div class="prompt"><div class="prompt-main">看！${target[0]}</div>${helperHtml(target[0],target[2])}<div class="prompt-note">"看" means "look!" Spot the matching word and tap it to keep walking.</div></div><div class="walk-scene"><div class="sun">☀️</div><div class="cloud one">☁️</div><div class="cloud two">☁️</div><div class="road"></div><div class="kid">🧒🎒</div><div class="review-bubble">${target[0]}</div>
-      <div class="review-object ro-1" data-word="${target[0]}">${target[1]}</div>
-      <div class="review-object ro-2" data-word="${walkSet[(state.walkSeen+1)%walkSet.length][0]}">${walkSet[(state.walkSeen+1)%walkSet.length][1]}</div>
-      <div class="review-object ro-3" data-word="${walkSet[(state.walkSeen+2)%walkSet.length][0]}">${walkSet[(state.walkSeen+2)%walkSet.length][1]}</div>
-      <div class="review-object ro-4" data-word="${walkSet[(state.walkSeen+3)%walkSet.length][0]}">${walkSet[(state.walkSeen+3)%walkSet.length][1]}</div>
-      <div class="review-object ro-5" data-word="${walkSet[(state.walkSeen+4)%walkSet.length][0]}">${walkSet[(state.walkSeen+4)%walkSet.length][1]}</div>
-    </div><div class="feedback" id="feedback"></div></div>`;
-    sceneAudio.onclick=()=>speak('看 '+target[0],sceneAudio);
-    sceneBody.querySelectorAll('.review-object').forEach(el=>el.addEventListener('click',()=>{
-      if(el.dataset.word===target[0]){addStar();state.walkSeen++;$('#feedback').textContent='Found it!';$('#feedback').className='feedback good';setTimeout(()=>{ if(state.walkSeen>=5) showMiniResult('Made It to School!','Next: say hello to the teacher 🏫'); else renderWalk()},600)}
-      else wrong(el);
-    }));
-  }
-
-  // --- Scene 5: greet ---
-  function renderGreet(){
-    const teacherPrompt=state.greetDone?'早上好！':'你好！';
-    sceneBody.innerHTML=`<div class="game-card"><div class="prompt"><div class="prompt-main">${teacherPrompt}</div>${helperHtml(teacherPrompt,T2[teacherPrompt])}<div class="prompt-note">Tap each person to say hello. Then find the principal.</div></div><div class="school-front"><div class="school-building"><div class="school-sign">🏫 上学</div><div class="school-door">🚪</div></div><div class="teacher-row"><div><button class="item-card" id="teacherBtn" style="min-height:120px"><div class="char">🧑‍🏫</div><div class="name-bubble">老师</div>${helperHtml('老师',T2['老师'])}</button></div><div><button class="item-card" id="principalBtn" style="min-height:120px"><div class="char">🧑‍💼</div><div class="name-bubble">校长</div>${helperHtml('校长',T1['校长'])}</button></div></div></div><div class="feedback" id="feedback"></div></div>`;
-    sceneAudio.onclick=()=>speak(teacherPrompt,sceneAudio);
-    $('#teacherBtn').onclick=()=>{speak(teacherPrompt);addStar();state.greetDone=true;$('#feedback').textContent='Great greeting!';$('#feedback').className='feedback good';setTimeout(renderGreet,550)};
-    $('#principalBtn').onclick=()=>{speak('校长');addStar();$('#feedback').textContent='Found the principal!';$('#feedback').className='feedback good';setTimeout(()=>showMiniResult('Great Job!','Last stop: the 6 quiz characters ⭐'),700)};
-  }
-
-  // --- Scene 6: quiz ---
-  const quizChars=['作','业','点','分','半','找'];
-  function shuffled(arr){ return arr.slice().sort(()=>Math.random()-.5); }
-  function renderQuiz(){
-    if(!state.quizOrder) state.quizOrder = shuffled(quizChars);
-    const target=state.quizOrder[state.quizRound%quizChars.length];
-    const options=shuffled(quizChars);
-    sceneBody.innerHTML=`<div class="game-card"><div class="quiz-prompt">Listen to the sound, then tap the matching character.</div><div class="quiz-progress">${quizChars.map((_,i)=>`<span class="dot ${i<=state.quizRound?'on':''}"></span>`).join('')}</div><div class="prompt" style="margin-bottom:14px"><button class="audio" id="quizAudio" style="font-size:26px;padding:13px 22px">🔊 Listen again</button><div class="helper" style="margin-top:10px">${helperHtml(target,T1[target])}</div></div><div class="quiz-grid">${options.map(ch=>`<button class="char-tile" data-char="${ch}"><div class="char-big">${ch}</div>${helperHtml(ch,T1[ch])}</button>`).join('')}</div><div class="feedback" id="feedback"></div></div>`;
-    $('#quizAudio').onclick=()=>speak(target,$('#quizAudio'));
-    setTimeout(()=>speak(target,$('#quizAudio')),80);
-    sceneBody.querySelectorAll('.char-tile').forEach(b=>b.addEventListener('click',()=>{
-      if(b.dataset.char===target){addStar();$('#feedback').textContent='Awesome!';$('#feedback').className='feedback good';setTimeout(()=>{state.quizRound++; if(state.quizRound<quizChars.length) renderQuiz(); else showFinal()},550)} else wrong(b);
-    }));
-  }
-  function showMiniResult(title,msg){
-    sceneBody.innerHTML=`<div class="result"><div class="result-stars">⭐</div><h2>${title}</h2><p>${msg}</p><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px"><button class="small-btn" id="nextMap">🗺️ Level Map</button><button class="small-btn" id="nextScene">➡️ Next Level</button></div></div>`;
-    $('#nextMap').onclick=()=>{state.scene='home';showScreen('home');renderMap()};
-    $('#nextScene').onclick=()=>{const idx=sceneMeta.findIndex(x=>x.id===state.scene); openScene(sceneMeta[Math.min(idx+1,sceneMeta.length-1)].id)};
-  }
-  function showFinal(){
-    sceneBody.innerHTML=`<div class="result"><div class="result-stars">⭐⭐⭐</div><h2>Quiz Complete!</h2><p>You found all 6 characters: 作 · 业 · 点 · 分 · 半 · 找</p><p style="font-size:30px;color:#d99700;font-weight:950">Stars this round: ${state.stars}</p><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px"><button class="small-btn" id="homeDone">🏠 Back to Start</button><button class="small-btn" id="redoQuiz">🔁 Play Again</button></div></div>`;
-    $('#homeDone').onclick=()=>{state.scene='home';showScreen('home');renderMap()};
-    $('#redoQuiz').onclick=()=>{state.quizRound=0;state.quizOrder=null;openScene('quiz')};
-  }
-
-  renderMap();
+renderMap();updateHearts();
+// Best-effort initial speech for the two requested scenes. Autoplay restrictions vary by browser.
+setTimeout(()=>{if(state.scene==='home'){}},300);
 })();
 </script>
 </body>
