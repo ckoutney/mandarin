@@ -60,6 +60,8 @@
   .shake{animation:shake .35s ease}.disabled{pointer-events:none;opacity:.65}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
   .result{text-align:center;background:#fff;border:1px solid var(--line);border-radius:26px;padding:28px;box-shadow:var(--shadow)}.result-stars{font-size:72px}.result h2{font-size:40px;margin:4px 0}.result p{color:var(--muted);font-size:18px;font-weight:800}
   .parent{position:absolute;left:-9999px}.parent-data{display:none}.helper-on .parent-data{display:block}
+  .audio-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);max-width:min(88vw,420px);background:#17324d;color:#fff;font-weight:800;font-size:15px;line-height:1.4;padding:12px 20px;border-radius:18px;box-shadow:0 10px 25px rgba(0,0,0,.25);z-index:200;text-align:center;animation:toastIn .25s ease}
+  @keyframes toastIn{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
   @media(max-width:720px){
     header{padding:10px 12px}.brand span{display:none}.main{padding:14px 12px 24px}.map-grid{grid-template-columns:repeat(2,1fr)}.scene-card{min-height:150px}.clock-wrap{grid-template-columns:1fr}.clock{width:min(70vw,280px)}.options{grid-template-columns:1fr}.choice-grid{grid-template-columns:repeat(2,1fr)}.quiz-grid{grid-template-columns:repeat(2,1fr)}.game-card{padding:16px}.dress-stage{min-height:240px}.person{font-size:120px}.school-front{min-height:300px}.school-building{width:92%}
   }
@@ -71,7 +73,7 @@
 <header>
   <div class="brand"><div class="brand-icon">🌞</div><span>Getting Ready for School</span></div>
   <div class="header-right">
-    <div class="pill" aria-label="stars">⭐ <span id="starCount">0</span></div><div class="pill" aria-label="hearts">❤️ <span id="heartCount">5</span></div>
+    <div class="pill" aria-label="stars">⭐ <span id="starCount">0</span></div><div class="pill" aria-label="hearts"><span id="heartIcons">❤️❤️❤️❤️❤️</span> <span id="heartCount">5</span></div>
     <label class="pill" title="Show pinyin + English under each word"><span>Parent Helper</span> <input id="helperToggle" class="toggle" type="checkbox" aria-label="Parent Helper: show pinyin and English"></label>
   </div>
 </header>
@@ -140,7 +142,7 @@ const state={
   voices:[],zhVoice:null,currentSpeakText:'',currentAudioButton:null
 };
 const $=s=>document.querySelector(s);
-const app=$('#app'),mapGrid=$('#mapGrid'),starCount=$('#starCount'),heartCount=$('#heartCount'),
+const app=$('#app'),mapGrid=$('#mapGrid'),starCount=$('#starCount'),heartCount=$('#heartCount'),heartIcons=$('#heartIcons'),
   helperToggle=$('#helperToggle'),sceneTitle=$('#sceneTitle'),sceneSub=$('#sceneSub'),sceneBody=$('#sceneBody'),
   sceneAudio=$('#sceneAudio'),backBtn=$('#backBtn');
 
@@ -158,30 +160,58 @@ function speak(text,button){
   if(button){button.classList.add('speaking');setTimeout(()=>button.classList.remove('speaking'),650);}
   if(!('speechSynthesis' in window)||typeof SpeechSynthesisUtterance==='undefined')return fallbackCue(text);
 
-  // Firefox can expose its voice list asynchronously. Refresh it immediately
-  // before creating the utterance, and prefer a Chinese voice when available.
+  // Voice lists can load asynchronously (notably in Firefox). Refresh right before speaking.
   findVoice();
+  if(!state.zhVoice){
+    // No Chinese voice is installed/available at all — most commonly seen in Firefox,
+    // which (unlike Chrome/Edge/Safari) has no bundled voices of its own and relies
+    // entirely on whatever the OS has installed. Trying to speak anyway would just be
+    // silent, so show the visible pinyin fallback right away instead.
+    if(button)button.classList.remove('speaking');
+    return fallbackCue(text);
+  }
+
   const u=new SpeechSynthesisUtterance(text);
   u.lang='zh-CN';
   u.rate=.82;
   u.pitch=1.05;
-  if(state.zhVoice)u.voice=state.zhVoice;
+  u.voice=state.zhVoice;
 
   u.onstart=()=>{ if(button)button.classList.add('speaking'); };
   u.onend=()=>{ if(button)button.classList.remove('speaking'); };
   u.onerror=()=>{ if(button)button.classList.remove('speaking'); fallbackCue(text); };
 
-  // Firefox can get stuck if speechSynthesis is cancelled and immediately
-  // restarted. Queue the utterance on the next event-loop turn.
-  window.speechSynthesis.cancel();
-  setTimeout(()=>{
+  const speakNow=()=>{
     try{ window.speechSynthesis.speak(u); }
     catch(e){ fallbackCue(text); }
-  },60);
+  };
+  if(window.speechSynthesis.speaking||window.speechSynthesis.pending){
+    // Something is still playing — Firefox can get stuck if cancelled and restarted
+    // in the same tick, so give it a brief moment. This is the uncommon case.
+    window.speechSynthesis.cancel();
+    setTimeout(speakNow,60);
+  }else{
+    // The common case: call speak() immediately and synchronously. Some browsers
+    // (Firefox in particular) require the native call to happen directly within the
+    // user's tap rather than inside a deferred timer, or it's silently dropped.
+    speakNow();
+  }
 }
 function fallbackCue(text){
-  const b=state.currentAudioButton;if(!b)return;b.textContent='🔊';b.title='No Chinese voice found — use the pinyin helper';
-  b.animate([{transform:'scale(1)'},{transform:'scale(1.15)'},{transform:'scale(1)'}],{duration:500});
+  const b=state.currentAudioButton;
+  if(b){
+    const original=b.textContent;
+    b.textContent='🔇';b.title='No Chinese voice found — see the pinyin below';
+    b.animate([{transform:'scale(1)'},{transform:'scale(1.15)'},{transform:'scale(1)'}],{duration:500});
+    setTimeout(()=>{ b.textContent=original==='🔇'?'🔊':original; },1200);
+  }
+  showToast('🔇 No Chinese voice found on this browser — turn on Parent Helper above to see pinyin.');
+}
+function showToast(msg){
+  const old=document.getElementById('audioToast');if(old)old.remove();
+  const t=document.createElement('div');t.id='audioToast';t.className='audio-toast';t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>{t.remove();},4200);
 }
 function findVoice(){
   if(!('speechSynthesis'in window))return;
@@ -196,7 +226,11 @@ if('speechSynthesis'in window){
   [150,500,1000,2000].forEach(ms=>setTimeout(findVoice,ms));
 }
 
-function updateHearts(){heartCount.textContent=state.hearts;}
+function updateHearts(){
+  const total=5,left=Math.max(state.hearts,0),lost=Math.max(total-left,0);
+  heartIcons.textContent='❤️'.repeat(left)+'🖤'.repeat(lost);
+  heartCount.textContent=state.hearts;
+}
 function refillHearts(){state.hearts=5;updateHearts();}
 function loseHeart(el){
   state.hearts--;updateHearts();wrong(el);
