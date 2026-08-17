@@ -50,7 +50,7 @@
   .number{position:absolute;left:50%;top:50%;transform-origin:0 0}
   .digital{display:flex;justify-content:center;align-items:center;border:2px solid #d9e6f1;border-radius:22px;background:#f8fbff;padding:24px;font-size:clamp(40px,10vw,68px);font-weight:950;letter-spacing:.03em;min-height:150px}
   .options{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}.option{min-height:90px;border:2px solid var(--line);border-radius:20px;background:#fff;cursor:pointer;font-weight:950;font-size:clamp(25px,5vw,36px);transition:.12s;box-shadow:0 6px 14px rgba(30,67,98,.06)}.option:hover{transform:translateY(-2px);border-color:#a9c5ea}.option:active{transform:scale(.98)}
-  .choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.item-card{background:#fff;border:2px solid var(--line);border-radius:20px;padding:18px;cursor:pointer;min-height:130px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;box-shadow:0 7px 15px rgba(0,0,0,.05);transition:.12s}.item-card:hover{border-color:#a7c7f4;transform:translateY(-2px)}.item-emoji{font-size:50px}.item-word{font-size:34px;font-weight:950}.item-hint{font-size:14px;color:var(--muted);font-weight:800;text-align:center}
+  .choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.item-card{background:#fff;border:2px solid var(--line);border-radius:20px;padding:18px;cursor:pointer;min-height:130px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;box-shadow:0 7px 15px rgba(0,0,0,.05);transition:.12s}.item-card:hover{border-color:#a7c7f4;transform:translateY(-2px)}.item-emoji{font-size:50px}.item-word{font-size:34px;font-weight:950}.item-word-row{display:flex;align-items:center;justify-content:center;gap:10px}.item-emoji-inline{font-size:36px;line-height:1}.item-hint{font-size:14px;color:var(--muted);font-weight:800;text-align:center}
   .dress-stage{background:linear-gradient(180deg,#e9f8ff,#fff7ef);border-radius:26px;min-height:280px;position:relative;display:flex;justify-content:center;align-items:flex-end;padding:18px;overflow:hidden;border:1px solid #e1e9ef}.person{font-size:145px;line-height:1;position:relative;width:180px;height:210px;display:flex;align-items:flex-end;justify-content:center}.person-base{font-size:145px;line-height:1}.wear-layer{position:absolute;left:50%;transform:translateX(-50%);font-size:72px;line-height:1;pointer-events:none}.wear-clothes{bottom:66px}.wear-socks{bottom:18px;font-size:46px}.wear-shoes{bottom:0;font-size:48px}.wear-badges{position:absolute;left:14px;top:14px;display:flex;gap:7px;flex-wrap:wrap}.wear{background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 11px;font-weight:900}.wear.done{background:#eafff1;border-color:#9fdfb8;color:#268455}
   .bag{background:linear-gradient(180deg,#eff7ff,#fff);border:2px dashed #a9c5df;border-radius:24px;padding:20px;display:flex;align-items:center;justify-content:center;min-height:175px;margin-bottom:14px}.bag-icon{font-size:92px;filter:drop-shadow(0 8px 8px rgba(0,0,0,.08))}.bag-items{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:12px}.packed{padding:8px 12px;border-radius:999px;background:#eafff1;border:1px solid #a7dfbc;font-size:22px;font-weight:950}
   .walk-scene{position:relative;min-height:330px;border-radius:26px;overflow:hidden;background:linear-gradient(#bfe8ff 0 56%,#d7f3c6 56% 68%,#c8b59e 68% 100%);border:1px solid #c7dce7}.sun{position:absolute;right:20px;top:18px;font-size:48px}.cloud{position:absolute;font-size:45px;opacity:.9}.cloud.one{left:12%;top:30px}.cloud.two{left:52%;top:76px}.road{position:absolute;left:0;right:0;bottom:0;height:33%;background:#c5b49d;clip-path:polygon(21% 0,79% 0,100% 100%,0 100%)}.kid{position:absolute;bottom:54px;left:4%;font-size:84px;transition:left .55s ease}.review-object{position:absolute;cursor:pointer;user-select:none;transition:.12s}.review-object:hover{transform:scale(1.08)}.ro-1{right:14%;bottom:56px;font-size:57px}.ro-2{left:8%;bottom:82px;font-size:55px}.ro-3{left:38%;bottom:38px;font-size:55px}.ro-4{right:31%;bottom:74px;font-size:52px}.ro-5{right:7%;bottom:105px;font-size:53px}.review-bubble{position:absolute;top:14px;left:14px;right:14px;background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:18px;padding:12px 14px;font-size:22px;font-weight:950;text-align:center}
@@ -137,7 +137,7 @@ const state={
   clockCorrect:0,clockQuestion:null,
   dressRound:0,dressStep:0,dressOptions:null,
   packed:[],bagRound:0,bagTarget:null,bagOptions:null,
-  walkSeen:0,walkObjects:null,
+  walkSeen:0,walkOrder:null,walkObjects:null,
   greetStep:0,quizMode:'chars',quizRound:0,quizOrder:null,quizOptions:null,
   voices:[],zhVoice:null,currentSpeakText:'',currentAudioButton:null
 };
@@ -214,7 +214,7 @@ function showGameOver(){
   state.clockCorrect=0;state.clockQuestion=null;
   state.dressRound=0;state.dressStep=0;state.dressOptions=null;
   state.packed=[];state.bagRound=0;state.bagTarget=null;state.bagOptions=null;
-  state.walkSeen=0;state.walkObjects=null;
+  state.walkSeen=0;state.walkOrder=null;state.walkObjects=null;
   state.greetStep=0;state.quizMode='chars';state.quizRound=0;state.quizOrder=null;state.quizOptions=null;
   starCount.textContent='0';updateHearts();showScreen('home');renderMap();
   sceneBody.innerHTML='';
@@ -265,7 +265,7 @@ function resetLevelState(id){
   if(id==='clock'){state.clockCorrect=0;state.clockQuestion=null;}
   else if(id==='dress'){state.dressRound=0;state.dressStep=0;state.dressOptions=null;}
   else if(id==='bag'){state.bagRound=0;state.packed=[];state.bagTarget=null;state.bagOptions=null;}
-  else if(id==='walk'){state.walkSeen=0;state.walkObjects=null;}
+  else if(id==='walk'){state.walkSeen=0;state.walkOrder=null;state.walkObjects=null;}
   else if(id==='greet')state.greetStep=0;
   else if(id==='quiz'){state.quizMode='chars';state.quizRound=0;state.quizOrder=null;state.quizOptions=null;}
 }
@@ -375,7 +375,7 @@ function renderBag(){
     state.bagOptions=bagItems.slice().sort(()=>Math.random()-.5);
   }
   const target=state.bagTarget,options=state.bagOptions;
-  sceneBody.innerHTML=`<div class="game-card"><div class="prompt"><div class="prompt-main">🔎 Find: ${cap(enText(target[2]))}</div>${helperHtml(target[0],target[2])}<div class="prompt-note">Find the right thing and put it in the backpack. Round ${state.bagRound+1}/3.</div></div><div class="bag"><div class="bag-icon">🎒</div></div><div class="bag-items">${state.packed.map(w=>`<span class="packed">✓ ${w}</span>`).join('')}</div><div class="choice-grid" style="margin-top:16px">${options.map(x=>`<button class="item-card" data-word="${x[0]}"><div class="item-word">${x[0]}</div>${helperHtml(x[0],x[2])}</button>`).join('')}</div><div class="feedback" id="feedback">🎒 ${state.bagRound}/3 packed</div></div>`;
+  sceneBody.innerHTML=`<div class="game-card"><div class="prompt"><div class="prompt-main">🔎 Find: ${cap(enText(target[2]))}</div>${helperHtml(target[0],target[2])}<div class="prompt-note">Find the right thing and put it in the backpack. Round ${state.bagRound+1}/3.</div></div><div class="bag"><div class="bag-icon">🎒</div></div><div class="bag-items">${state.packed.map(w=>`<span class="packed">✓ ${w}</span>`).join('')}</div><div class="choice-grid" style="margin-top:16px">${options.map(x=>`<button class="item-card" data-word="${x[0]}"><div class="item-word-row"><span class="item-emoji-inline">${x[1]}</span><span class="item-word">${x[0]}</span></div>${helperHtml(x[0],x[2])}</button>`).join('')}</div><div class="feedback" id="feedback">🎒 ${state.bagRound}/3 packed</div></div>`;
   sceneAudio.onclick=()=>speak('找 '+target[0],sceneAudio);setTimeout(()=>speak('找 '+target[0],sceneAudio),120);
   sceneBody.querySelectorAll('.item-card').forEach(b=>b.onclick=()=>{
     if(b.dataset.word===target[0]){
@@ -391,7 +391,8 @@ const walkPool=[
  ['红色','🔴',T2['红色']],['黄色','🟡',T2['黄色']],['蓝色','🔵',T2['蓝色']],['山','⛰️',T2['山']],['水','💧',T2['水']],['木','🪵',T2['木']],['圆形','⚪',T2['圆形']],['三角形','🔺',T2['三角形']]
 ];
 function renderWalk(){
-  const target=walkPool[state.walkSeen%walkPool.length],progress=state.walkSeen, left=Math.min(4+progress*13,72);
+  if(!state.walkOrder)state.walkOrder=shuffled(walkPool).slice(0,6);
+  const target=state.walkOrder[state.walkSeen],progress=state.walkSeen, left=Math.min(4+progress*13,72);
   if(!state.walkObjects){
     const distractors=walkPool.filter(x=>x[0]!==target[0]).sort(()=>Math.random()-.5).slice(0,4);
     state.walkObjects=[target,...distractors].sort(()=>Math.random()-.5);
