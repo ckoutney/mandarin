@@ -233,6 +233,25 @@ function addStar(){
   try{new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQAAAAA=').play().catch(()=>{});}catch(e){}
 }
 function wrong(el){el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');}
+function playBell(){
+  // A small, soft "ding" for incorrect quiz taps — two quiet sine tones with a quick decay.
+  try{
+    const AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC)return;
+    const ctx=new AC();
+    const now=ctx.currentTime;
+    [880,1318.5].forEach((freq,i)=>{
+      const osc=ctx.createOscillator(),gain=ctx.createGain();
+      osc.type='sine';osc.frequency.value=freq;
+      gain.gain.setValueAtTime(0,now);
+      gain.gain.linearRampToValueAtTime(i===0?0.11:0.045,now+0.008);
+      gain.gain.exponentialRampToValueAtTime(0.0001,now+0.45);
+      osc.connect(gain);gain.connect(ctx.destination);
+      osc.start(now);osc.stop(now+0.5);
+    });
+    setTimeout(()=>ctx.close(),700);
+  }catch(e){}
+}
 function showScreen(name){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));(name==='home'?$('#home'):$('#scene')).classList.add('active');}
 function renderMap(){
   mapGrid.innerHTML=sceneMeta.map((s,i)=>`<button class="scene-card" data-scene="${s.id}" aria-label="${escapeHtml(s.sub)}: ${escapeHtml(s.zh)}"><span class="scene-no">${i+1}</span><div class="scene-icon">${s.icon}</div><div class="scene-title">${s.zh}</div><div class="scene-sub">${s.sub}</div></button>`).join('');
@@ -402,7 +421,7 @@ function renderGreet(){
   const btns={teacherBtn:'老师',friendBtn:'小朋友',principalBtn:'校长'};
   Object.entries(btns).forEach(([id,word])=>$('#'+id).onclick=()=>{
     if(word===s.target){
-      speak(s.say,sceneAudio);addStar();$('#feedback').textContent='Great greeting! 👋';$('#feedback').className='feedback good';
+      addStar();$('#feedback').textContent='Great greeting! 👋';$('#feedback').className='feedback good';
       state.greetStep++;setTimeout(()=>{if(state.greetStep>=3)completeLevel('Welcome to School!','You greeted everyone. Time for the final quiz ⭐','quiz');else renderGreet();},600);
     }else{if(!loseHeart($('#'+id))){$('#feedback').textContent='Try the person the prompt asks for.';$('#feedback').className='feedback bad';}}
   });
@@ -428,7 +447,7 @@ function renderQuiz(){
     if(b.dataset.word===target){
       addStar();$('#feedback').textContent='Awesome! ⭐';$('#feedback').className='feedback good';
       setTimeout(()=>{state.quizRound++;state.quizOptions=null;renderQuiz();},500);
-    }else{loseHeart(b);}
+    }else{playBell();loseHeart(b);}
   });
 }
 function showFinal(){
