@@ -134,8 +134,11 @@ const sceneMeta=[
 
 const state={
   scene:'home',stars:0,hearts:5,helper:false,
-  clockCorrect:0,dressRound:0,dressStep:0,packed:[],bagRound:0,walkSeen:0,
-  greetStep:0,quizMode:'chars',quizRound:0,quizOrder:null,
+  clockCorrect:0,clockQuestion:null,
+  dressRound:0,dressStep:0,dressOptions:null,
+  packed:[],bagRound:0,bagTarget:null,bagOptions:null,
+  walkSeen:0,walkObjects:null,
+  greetStep:0,quizMode:'chars',quizRound:0,quizOrder:null,quizOptions:null,
   voices:[],zhVoice:null,currentSpeakText:'',currentAudioButton:null
 };
 const $=s=>document.querySelector(s);
@@ -145,6 +148,8 @@ const app=$('#app'),mapGrid=$('#mapGrid'),starCount=$('#starCount'),heartCount=$
 
 function escapeHtml(s){return String(s).replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
 function dataFor(w){return T1[w]||T2[w]||null}
+function enText(data){if(!data)return '';return Array.isArray(data)?data[1]:data.en;}
+function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1):s;}
 function helperHtml(word,data){
   if(!state.helper||!data)return '';
   const [p,en]=Array.isArray(data)?data:[data.p,data.en];
@@ -205,7 +210,12 @@ function loseHeart(el){
 }
 function showGameOver(){
   speechSynthesis?.cancel?.();
-  state.scene='home';state.hearts=5;state.stars=0;state.clockCorrect=0;state.dressRound=0;state.dressStep=0;state.packed=[];state.bagRound=0;state.walkSeen=0;state.greetStep=0;state.quizMode='chars';state.quizRound=0;state.quizOrder=null;
+  state.scene='home';state.hearts=5;state.stars=0;
+  state.clockCorrect=0;state.clockQuestion=null;
+  state.dressRound=0;state.dressStep=0;state.dressOptions=null;
+  state.packed=[];state.bagRound=0;state.bagTarget=null;state.bagOptions=null;
+  state.walkSeen=0;state.walkObjects=null;
+  state.greetStep=0;state.quizMode='chars';state.quizRound=0;state.quizOrder=null;state.quizOptions=null;
   starCount.textContent='0';updateHearts();showScreen('home');renderMap();
   sceneBody.innerHTML='';
   // Put a clear restart card into the home screen temporarily.
@@ -229,8 +239,30 @@ function renderMap(){
   mapGrid.querySelectorAll('.scene-card').forEach(b=>b.onclick=()=>openScene(b.dataset.scene));
 }
 function setSceneHeader(meta){sceneTitle.textContent=meta.zh;sceneSub.textContent=meta.sub;sceneAudio.onclick=()=>speak(meta.zh,sceneAudio);}
+function resetLevelState(id){
+  // Re-entering a level (from the map, "Replay Level", or "Next Level") always starts
+  // that level's own progress from scratch, so a finished level can be played again
+  // instead of instantly re-completing (or, for Greet, throwing an error).
+  if(id==='clock'){state.clockCorrect=0;state.clockQuestion=null;}
+  else if(id==='dress'){state.dressRound=0;state.dressStep=0;state.dressOptions=null;}
+  else if(id==='bag'){state.bagRound=0;state.packed=[];state.bagTarget=null;state.bagOptions=null;}
+  else if(id==='walk'){state.walkSeen=0;state.walkObjects=null;}
+  else if(id==='greet')state.greetStep=0;
+  else if(id==='quiz'){state.quizMode='chars';state.quizRound=0;state.quizOrder=null;state.quizOptions=null;}
+}
+function rerenderScene(){
+  // Redraws whatever level is currently open WITHOUT resetting progress or re-rolling
+  // the current question — used by things like the Parent Helper toggle, which should
+  // only change what's visible, not what's being asked.
+  if(state.scene==='clock')renderClock();
+  else if(state.scene==='dress')renderDress();
+  else if(state.scene==='bag')renderBag();
+  else if(state.scene==='walk')renderWalk();
+  else if(state.scene==='greet')renderGreet();
+  else if(state.scene==='quiz')renderQuiz();
+}
 function openScene(id){
-  const meta=sceneMeta.find(x=>x.id===id);state.scene=id;state.currentAudioButton=sceneAudio;setSceneHeader(meta);showScreen('scene');
+  const meta=sceneMeta.find(x=>x.id===id);resetLevelState(id);state.scene=id;state.currentAudioButton=sceneAudio;setSceneHeader(meta);showScreen('scene');
   if(id==='clock')renderClock();
   if(id==='dress')renderDress();
   if(id==='bag')renderBag();
@@ -239,7 +271,7 @@ function openScene(id){
   if(id==='quiz')renderQuiz();
 }
 backBtn.onclick=()=>{state.scene='home';showScreen('home');renderMap();};
-helperToggle.onchange=()=>{state.helper=helperToggle.checked;app.classList.toggle('helper-on',state.helper);if(state.scene!=='home')openScene(state.scene);};
+helperToggle.onchange=()=>{state.helper=helperToggle.checked;app.classList.toggle('helper-on',state.helper);if(state.scene!=='home')rerenderScene();};
 
 // ---------- CLOCK ----------
 const hourMinuteTimes=[
@@ -267,16 +299,21 @@ function clockSvg(h,m){
   return `<div class="clock" aria-label="analog clock ${h}:${String(m).padStart(2,'0')}">${nums}<div class="hand hour tick" style="transform:rotate(${hourDeg-90}deg)"></div><div class="hand minute tick" style="transform:rotate(${minDeg-90}deg)"></div><div class="center-dot"></div></div>`;
 }
 function renderClock(){
-  if(state.clockCorrect>=10){completeLevel('Clock Complete!','Great time telling! Now get dressed 👕','dress');return;}
-  const idx=Math.floor(Math.random()*hourMinuteTimes.length),r=hourMinuteTimes[idx];
-  let otherIdxs=hourMinuteTimes.map((_,i)=>i).filter(i=>i!==idx).sort(()=>Math.random()-.5).slice(0,2);
-  const choices=[r[0],...otherIdxs.map(i=>hourMinuteTimes[i][0])].sort(()=>Math.random()-.5);
-  sceneBody.innerHTML=`<div class="game-card"><div class="prompt"><div class="prompt-main">${r[1]}</div>${helperHtml(r[1],{p:r[2],en:r[0]})}<div class="prompt-note">Listen, then choose the matching digital time.</div></div><div class="clock-wrap"><div>${clockSvg(r[3],r[4])}</div><div class="digital" id="digitalTarget">? : ?</div></div><div class="options">${choices.map(x=>`<button class="option" data-time="${x}">${x}</button>`).join('')}</div><div class="feedback" id="feedback">⭐ ${state.clockCorrect}/10</div></div>`;
+  if(state.clockCorrect>=6){completeLevel('Clock Complete!','Great time telling! Now get dressed 👕','dress');return;}
+  if(!state.clockQuestion){
+    const idx=Math.floor(Math.random()*hourMinuteTimes.length),r=hourMinuteTimes[idx];
+    const otherIdxs=hourMinuteTimes.map((_,i)=>i).filter(i=>i!==idx).sort(()=>Math.random()-.5).slice(0,2);
+    const choices=[r[0],...otherIdxs.map(i=>hourMinuteTimes[i][0])].sort(()=>Math.random()-.5);
+    state.clockQuestion={r,choices};
+  }
+  const {r,choices}=state.clockQuestion;
+  sceneBody.innerHTML=`<div class="game-card"><div class="prompt"><div class="prompt-main">${r[1]}</div>${helperHtml(r[1],{p:r[2],en:r[0]})}<div class="prompt-note">Listen, then choose the matching digital time.</div></div><div class="clock-wrap"><div>${clockSvg(r[3],r[4])}</div><div class="digital" id="digitalTarget">? : ?</div></div><div class="options">${choices.map(x=>`<button class="option" data-time="${x}">${x}</button>`).join('')}</div><div class="feedback" id="feedback">⭐ ${state.clockCorrect}/6</div></div>`;
   sceneAudio.onclick=()=>speak(r[1],sceneAudio);
   sceneBody.querySelectorAll('.option').forEach(b=>b.onclick=()=>{
     if(b.dataset.time===r[0]){
       $('#digitalTarget').textContent=r[0];addStar();state.clockCorrect++;
-      $('#feedback').textContent=`Nice! ⭐ ${state.clockCorrect}/10`;$('#feedback').className='feedback good';
+      $('#feedback').textContent=`Nice! ⭐ ${state.clockCorrect}/6`;$('#feedback').className='feedback good';
+      state.clockQuestion=null;
       setTimeout(renderClock,500);
     }else{
       if(loseHeart(b))return;$('#feedback').textContent='Not quite — listen again and try another.';$('#feedback').className='feedback bad';speak(r[1],sceneAudio);
@@ -290,14 +327,15 @@ function renderClock(){
 const dressOrder=[['衣服','👕',T1['衣服']],['袜子','🧦',T1['袜子']],['鞋子','👟',T1['鞋子']]];
 function renderDress(){
   const next=dressOrder[state.dressStep];
-  const options=dressOrder.map(x=>x).sort(()=>Math.random()-.5);
+  if(!state.dressOptions)state.dressOptions=dressOrder.map(x=>x).sort(()=>Math.random()-.5);
+  const options=state.dressOptions;
   const worn=dressOrder.slice(0,state.dressStep);
-  sceneBody.innerHTML=`<div class="game-card"><div class="prompt"><div class="prompt-main">${next[0]}</div>${helperHtml(next[0],next[2])}<div class="prompt-note">Put on all three: 衣服 → 袜子 → 鞋子. Round ${state.dressRound+1}/3.</div></div><div class="dress-stage"><div class="wear-badges">${dressOrder.map(x=>`<span class="wear ${worn.some(w=>w[0]===x[0])?'done':''}">${x[0]}</span>`).join('')}</div><div class="person"><div class="person-base">🧒</div>${worn.map(x=>`<div class="wear-layer ${x[0]==='衣服'?'wear-clothes':x[0]==='袜子'?'wear-socks':'wear-shoes'}">${x[1]}</div>`).join('')}</div></div><div class="choice-grid" style="margin-top:16px">${options.map(x=>`<button class="item-card" data-word="${x[0]}"><div class="item-word">${x[0]}</div>${helperHtml(x[0],x[2])}</button>`).join('')}</div><div class="feedback" id="feedback">Round ${state.dressRound+1}/3</div></div>`;
+  sceneBody.innerHTML=`<div class="game-card"><div class="prompt"><div class="prompt-main">${cap(enText(next[2]))}</div>${helperHtml(next[0],next[2])}<div class="prompt-note">Put on all three: 衣服 → 袜子 → 鞋子. Round ${state.dressRound+1}/3.</div></div><div class="dress-stage"><div class="wear-badges">${dressOrder.map(x=>`<span class="wear ${worn.some(w=>w[0]===x[0])?'done':''}">${x[0]}</span>`).join('')}</div><div class="person"><div class="person-base">🧒</div>${worn.map(x=>`<div class="wear-layer ${x[0]==='衣服'?'wear-clothes':x[0]==='袜子'?'wear-socks':'wear-shoes'}">${x[1]}</div>`).join('')}</div></div><div class="choice-grid" style="margin-top:16px">${options.map(x=>`<button class="item-card" data-word="${x[0]}"><div class="item-word">${x[0]}</div>${helperHtml(x[0],x[2])}</button>`).join('')}</div><div class="feedback" id="feedback">Round ${state.dressRound+1}/3</div></div>`;
   sceneAudio.onclick=()=>speak(next[0],sceneAudio);
   setTimeout(()=>speak(next[0],sceneAudio),120);
   sceneBody.querySelectorAll('.item-card').forEach(b=>b.onclick=()=>{
     if(b.dataset.word===next[0]){
-      addStar();state.dressStep++;
+      addStar();state.dressStep++;state.dressOptions=null;
       if(state.dressStep<3){$('#feedback').textContent='On it goes!';$('#feedback').className='feedback good';setTimeout(renderDress,500);}
       else{
         state.dressRound++;state.dressStep=0;$('#feedback').textContent='All dressed!';$('#feedback').className='feedback good';
@@ -310,15 +348,19 @@ function renderDress(){
 
 // ---------- BAG ----------
 const bagItems=[['作业','📄',T1['作业']],['水','💧',T2['水']],['衣服','👕',T1['衣服']],['袜子','🧦',T1['袜子']],['鞋子','👟',T1['鞋子']],['书包','🎒',T1['书包']]];
+const bagTargets=bagItems.filter(x=>x[0]!=='书包'); // 书包 is the backpack itself, not something to pack into it
 function renderBag(){
   if(state.bagRound>=3){completeLevel('Backpack Ready!','Three things packed. Time to walk to school 🌳','walk');return;}
-  const target=bagItems.filter(x=>!state.packed.includes(x[0])).sort(()=>Math.random()-.5)[0];
-  const options=bagItems.slice().sort(()=>Math.random()-.5);
-  sceneBody.innerHTML=`<div class="game-card"><div class="prompt"><div class="prompt-main">找 ${target[0]}</div>${helperHtml(target[0],target[2])}<div class="prompt-note">Find the right thing and put it in the backpack. Round ${state.bagRound+1}/3.</div></div><div class="bag"><div class="bag-icon">🎒</div></div><div class="bag-items">${state.packed.map(w=>`<span class="packed">✓ ${w}</span>`).join('')}</div><div class="choice-grid" style="margin-top:16px">${options.map(x=>`<button class="item-card" data-word="${x[0]}"><div class="item-word">${x[0]}</div>${helperHtml(x[0],x[2])}</button>`).join('')}</div><div class="feedback" id="feedback">🎒 ${state.bagRound}/3 packed</div></div>`;
+  if(!state.bagTarget){
+    state.bagTarget=bagTargets.filter(x=>!state.packed.includes(x[0])).sort(()=>Math.random()-.5)[0];
+    state.bagOptions=bagItems.slice().sort(()=>Math.random()-.5);
+  }
+  const target=state.bagTarget,options=state.bagOptions;
+  sceneBody.innerHTML=`<div class="game-card"><div class="prompt"><div class="prompt-main">🔎 Find: ${cap(enText(target[2]))}</div>${helperHtml(target[0],target[2])}<div class="prompt-note">Find the right thing and put it in the backpack. Round ${state.bagRound+1}/3.</div></div><div class="bag"><div class="bag-icon">🎒</div></div><div class="bag-items">${state.packed.map(w=>`<span class="packed">✓ ${w}</span>`).join('')}</div><div class="choice-grid" style="margin-top:16px">${options.map(x=>`<button class="item-card" data-word="${x[0]}"><div class="item-word">${x[0]}</div>${helperHtml(x[0],x[2])}</button>`).join('')}</div><div class="feedback" id="feedback">🎒 ${state.bagRound}/3 packed</div></div>`;
   sceneAudio.onclick=()=>speak('找 '+target[0],sceneAudio);setTimeout(()=>speak('找 '+target[0],sceneAudio),120);
   sceneBody.querySelectorAll('.item-card').forEach(b=>b.onclick=()=>{
     if(b.dataset.word===target[0]){
-      addStar();state.packed.push(target[0]);state.bagRound++;$('#feedback').textContent=`Packed! 🎒 ${state.bagRound}/3`;$(
+      addStar();state.packed.push(target[0]);state.bagRound++;state.bagTarget=null;state.bagOptions=null;$('#feedback').textContent=`Packed! 🎒 ${state.bagRound}/3`;$(
         '#feedback').className='feedback good';setTimeout(renderBag,550);
     }else{if(!loseHeart(b)){speak('找 '+target[0],sceneAudio);}}
   });
@@ -331,13 +373,16 @@ const walkPool=[
 ];
 function renderWalk(){
   const target=walkPool[state.walkSeen%walkPool.length],progress=state.walkSeen, left=Math.min(4+progress*13,72);
-  const distractors=walkPool.filter(x=>x[0]!==target[0]).sort(()=>Math.random()-.5).slice(0,4);
-  const objects=[target,...distractors].sort(()=>Math.random()-.5);
+  if(!state.walkObjects){
+    const distractors=walkPool.filter(x=>x[0]!==target[0]).sort(()=>Math.random()-.5).slice(0,4);
+    state.walkObjects=[target,...distractors].sort(()=>Math.random()-.5);
+  }
+  const objects=state.walkObjects;
   sceneBody.innerHTML=`<div class="game-card"><div class="prompt"><div class="prompt-main">看！${target[0]}</div>${helperHtml(target[0],target[2])}<div class="prompt-note">Find the matching object. Each correct answer moves you closer to school! ${progress}/6</div></div><div class="walk-scene"><div class="sun">☀️</div><div class="cloud one">☁️</div><div class="cloud two">☁️</div><div class="road"></div><div class="kid" style="left:${left}%">🧒🎒</div><div class="review-bubble">${target[0]}</div>${objects.map((x,i)=>`<div class="review-object ro-${i+1}" data-word="${x[0]}">${x[1]}</div>`).join('')}<div style="position:absolute;right:4%;bottom:18px;font-size:54px">🏫</div></div><div class="feedback" id="feedback">🚶 ${progress}/6</div></div>`;
   sceneAudio.onclick=()=>speak('看 '+target[0],sceneAudio);setTimeout(()=>speak('看 '+target[0],sceneAudio),120);
   sceneBody.querySelectorAll('.review-object').forEach(el=>el.onclick=()=>{
     if(el.dataset.word===target[0]){
-      addStar();state.walkSeen++;$('#feedback').textContent=`Found it! 🚶 ${state.walkSeen}/6`;$('#feedback').className='feedback good';
+      addStar();state.walkSeen++;state.walkObjects=null;$('#feedback').textContent=`Found it! 🚶 ${state.walkSeen}/6`;$('#feedback').className='feedback good';
       setTimeout(()=>{if(state.walkSeen>=6)completeLevel('You Arrived!','You made it all the way to school 🏫','greet');else renderWalk();},500);
     }else{if(!loseHeart(el)){speak('看 '+target[0],sceneAudio);}}
   });
@@ -347,12 +392,13 @@ function renderWalk(){
 function renderGreet(){
   const steps=[
     {prompt:'早上好, 老师',target:'老师',say:'早上好, 老师',text:''},
-    {prompt:'你好, 朋友!',target:'小朋友',say:'你好, 朋友!',text:''},
-    {prompt:'找 校长',target:'校长',say:'你好！',text:'Find the principal and say hello.'}
+    {prompt:'你好, 小朋友!',target:'小朋友',say:'你好, 小朋友',text:''},
+    {prompt:'找 校长',target:'校长',say:'找 校长',text:'Find the principal and say hello.'}
   ];
   const s=steps[state.greetStep];
-  sceneBody.innerHTML=`<div class="game-card"><div class="prompt"><div class="prompt-main">${s.prompt}</div>${helperHtml(s.prompt,dataFor(s.prompt))}<div class="prompt-note">${s.text}</div></div><div class="school-front"><div class="school-building"><div class="school-sign">🏫 上学</div><div class="school-door">🚪</div></div><div class="teacher-row"><button class="item-card" id="teacherBtn"><div class="char">🧑‍🏫</div><div class="name-bubble">老师</div>${helperHtml('老师',T2['老师'])}</button><button class="item-card" id="friendBtn"><div class="char">🧒</div><div class="name-bubble">小朋友</div>${helperHtml('小朋友',T2['小朋友'])}</button><button class="item-card" id="principalBtn"><div class="char">🧑‍💼</div><div class="name-bubble">校长</div>${helperHtml('校长',T1['校长'])}</button></div></div><div class="feedback" id="feedback">👋 Step ${state.greetStep+1}/3</div></div>`;
+  sceneBody.innerHTML=`<div class="game-card"><div class="prompt"><div class="prompt-main">${s.prompt}</div>${helperHtml(s.target,dataFor(s.target))}<div class="prompt-note">${s.text}</div></div><div class="school-front"><div class="school-building"><div class="school-sign">🏫 上学</div><div class="school-door">🚪</div></div><div class="teacher-row"><button class="item-card" id="teacherBtn"><div class="char">🧑‍🏫</div><div class="name-bubble">老师</div>${helperHtml('老师',T2['老师'])}</button><button class="item-card" id="friendBtn"><div class="char">🧒</div><div class="name-bubble">小朋友</div>${helperHtml('小朋友',T2['小朋友'])}</button><button class="item-card" id="principalBtn"><div class="char">🧑‍💼</div><div class="name-bubble">校长</div>${helperHtml('校长',T1['校长'])}</button></div></div><div class="feedback" id="feedback">👋 Step ${state.greetStep+1}/3</div></div>`;
   sceneAudio.onclick=()=>speak(s.say,sceneAudio);
+  setTimeout(()=>speak(s.say,sceneAudio),120);
   const btns={teacherBtn:'老师',friendBtn:'小朋友',principalBtn:'校长'};
   Object.entries(btns).forEach(([id,word])=>$('#'+id).onclick=()=>{
     if(word===s.target){
@@ -368,31 +414,34 @@ const quizWords=['早上','书包','作业','校长','衣服','袜子','鞋子']
 function shuffled(a){return a.slice().sort(()=>Math.random()-.5);}
 function renderQuiz(){
   if(state.quizMode==='chars'&&state.quizRound>=quizChars.length){
-    state.quizMode='words';state.quizRound=0;state.quizOrder=null;
+    state.quizMode='words';state.quizRound=0;state.quizOrder=null;state.quizOptions=null;
   }
   if(state.quizMode==='words'&&state.quizRound>=quizWords.length){showFinal();return;}
   const list=state.quizMode==='chars'?quizChars:quizWords;
   if(!state.quizOrder)state.quizOrder=shuffled(list);
-  const target=state.quizOrder[state.quizRound],options=shuffled(list);
+  if(!state.quizOptions)state.quizOptions=shuffled(list);
+  const target=state.quizOrder[state.quizRound],options=state.quizOptions;
   const title=state.quizMode==='chars'?'Part 1 · Characters':'Part 2 · Character Combinations';
   sceneBody.innerHTML=`<div class="game-card"><div class="quiz-prompt">${title}<br>Listen, then tap what you hear.</div><div class="quiz-progress">${list.map((_,i)=>`<span class="dot ${i<=state.quizRound?'on':''}"></span>`).join('')}</div><div class="prompt"><button class="audio" id="quizAudio" style="font-size:26px;padding:13px 22px">🔊 Listen again</button><div class="helper" style="margin-top:10px">${helperHtml(target,dataFor(target))}</div></div><div class="${state.quizMode==='chars'?'quiz-grid':'choice-grid'}">${options.map(w=>`<button class="${state.quizMode==='chars'?'char-tile':'item-card'}" data-word="${w}">${state.quizMode==='chars'?`<div class="char-big">${w}</div>`:`<div class="item-word">${w}</div>`}${helperHtml(w,dataFor(w))}</button>`).join('')}</div><div class="feedback" id="feedback"></div></div>`;
   $('#quizAudio').onclick=()=>speak(target,$('#quizAudio'));setTimeout(()=>speak(target,$('#quizAudio')),100);
   sceneBody.querySelectorAll('[data-word]').forEach(b=>b.onclick=()=>{
     if(b.dataset.word===target){
       addStar();$('#feedback').textContent='Awesome! ⭐';$('#feedback').className='feedback good';
-      setTimeout(()=>{state.quizRound++;renderQuiz();},500);
-    }else{if(!loseHeart(b)){wrong(b);}}
+      setTimeout(()=>{state.quizRound++;state.quizOptions=null;renderQuiz();},500);
+    }else{loseHeart(b);}
   });
 }
 function showFinal(){
   sceneBody.innerHTML=`<div class="result"><div class="result-stars">⭐⭐⭐⭐</div><h2>Morning Complete!</h2><p>You practiced 6 characters and 7 character combinations:</p><p style="font-size:28px;font-weight:950">早上 · 书包 · 作业 · 校长 · 衣服 · 袜子 · 鞋子</p><p style="font-size:30px;color:#d99700;font-weight:950">Stars this round: ${state.stars}</p><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px"><button class="small-btn" id="homeDone">🏠 Back to Start</button><button class="small-btn" id="redoQuiz">🔁 Play Again</button></div></div>`;
   $('#homeDone').onclick=()=>{state.scene='home';showScreen('home');renderMap();};
-  $('#redoQuiz').onclick=()=>{state.quizMode='chars';state.quizRound=0;state.quizOrder=null;openScene('quiz');};
+  $('#redoQuiz').onclick=()=>openScene('quiz');
 }
 function completeLevel(title,msg,next){
   refillHearts();
-  sceneBody.innerHTML=`<div class="result"><div class="result-stars">⭐</div><h2>${title}</h2><p>${msg}</p><p>❤️ Hearts refilled to 5!</p><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px"><button class="small-btn" id="nextMap">🗺️ Level Map</button><button class="small-btn" id="nextScene">➡️ Next Level</button></div></div>`;
+  const justFinished=state.scene;
+  sceneBody.innerHTML=`<div class="result"><div class="result-stars">⭐</div><h2>${title}</h2><p>${msg}</p><p>❤️ Hearts refilled to 5!</p><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px"><button class="small-btn" id="nextMap">🗺️ Level Map</button><button class="small-btn" id="replayLevel">🔁 Replay Level</button><button class="small-btn" id="nextScene">➡️ Next Level</button></div></div>`;
   $('#nextMap').onclick=()=>{state.scene='home';showScreen('home');renderMap();};
+  $('#replayLevel').onclick=()=>openScene(justFinished);
   $('#nextScene').onclick=()=>openScene(next);
 }
 
