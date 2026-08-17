@@ -152,10 +152,29 @@ function helperHtml(word,data){
 }
 function speak(text,button){
   state.currentSpeakText=text; state.currentAudioButton=button||null;
-  if(button){button.classList.add('speaking');setTimeout(()=>button.classList.remove('speaking'),420);}
-  if(!('speechSynthesis'in window))return fallbackCue(text);
-  const u=new SpeechSynthesisUtterance(text);u.lang='zh-CN';u.rate=.82;u.pitch=1.05;if(state.zhVoice)u.voice=state.zhVoice;
-  window.speechSynthesis.cancel();window.speechSynthesis.speak(u);
+  if(button){button.classList.add('speaking');setTimeout(()=>button.classList.remove('speaking'),650);}
+  if(!('speechSynthesis' in window)||typeof SpeechSynthesisUtterance==='undefined')return fallbackCue(text);
+
+  // Firefox can expose its voice list asynchronously. Refresh it immediately
+  // before creating the utterance, and prefer a Chinese voice when available.
+  findVoice();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='zh-CN';
+  u.rate=.82;
+  u.pitch=1.05;
+  if(state.zhVoice)u.voice=state.zhVoice;
+
+  u.onstart=()=>{ if(button)button.classList.add('speaking'); };
+  u.onend=()=>{ if(button)button.classList.remove('speaking'); };
+  u.onerror=()=>{ if(button)button.classList.remove('speaking'); fallbackCue(text); };
+
+  // Firefox can get stuck if speechSynthesis is cancelled and immediately
+  // restarted. Queue the utterance on the next event-loop turn.
+  window.speechSynthesis.cancel();
+  setTimeout(()=>{
+    try{ window.speechSynthesis.speak(u); }
+    catch(e){ fallbackCue(text); }
+  },60);
 }
 function fallbackCue(text){
   const b=state.currentAudioButton;if(!b)return;b.textContent='🔊';b.title='No Chinese voice found — use the pinyin helper';
@@ -167,7 +186,12 @@ function findVoice(){
   state.zhVoice=state.voices.find(v=>/^zh-CN$/i.test(v.lang))||state.voices.find(v=>/^zh/i.test(v.lang))||null;
   document.body.classList.toggle('no-zh-voice',!state.zhVoice);
 }
-if('speechSynthesis'in window){speechSynthesis.onvoiceschanged=findVoice;findVoice();}
+if('speechSynthesis'in window){
+  speechSynthesis.onvoiceschanged=findVoice;
+  findVoice();
+  // Give Firefox a few chances to populate its OS voice list.
+  [150,500,1000,2000].forEach(ms=>setTimeout(findVoice,ms));
+}
 
 function updateHearts(){heartCount.textContent=state.hearts;}
 function refillHearts(){state.hearts=5;updateHearts();}
@@ -322,17 +346,17 @@ function renderWalk(){
 // ---------- GREET ----------
 function renderGreet(){
   const steps=[
-    {prompt:'早上好！',target:'老师',say:'早上好！',text:'Greet your teacher.'},
-    {prompt:'你好！',target:'小朋友',say:'你好！',text:'Say hello to your classmate.'},
+    {prompt:'早上好, 老师',target:'老师',say:'早上好, 老师',text:''},
+    {prompt:'你好, 朋友!',target:'小朋友',say:'你好, 朋友!',text:''},
     {prompt:'找 校长',target:'校长',say:'你好！',text:'Find the principal and say hello.'}
   ];
   const s=steps[state.greetStep];
   sceneBody.innerHTML=`<div class="game-card"><div class="prompt"><div class="prompt-main">${s.prompt}</div>${helperHtml(s.prompt,dataFor(s.prompt))}<div class="prompt-note">${s.text}</div></div><div class="school-front"><div class="school-building"><div class="school-sign">🏫 上学</div><div class="school-door">🚪</div></div><div class="teacher-row"><button class="item-card" id="teacherBtn"><div class="char">🧑‍🏫</div><div class="name-bubble">老师</div>${helperHtml('老师',T2['老师'])}</button><button class="item-card" id="friendBtn"><div class="char">🧒</div><div class="name-bubble">小朋友</div>${helperHtml('小朋友',T2['小朋友'])}</button><button class="item-card" id="principalBtn"><div class="char">🧑‍💼</div><div class="name-bubble">校长</div>${helperHtml('校长',T1['校长'])}</button></div></div><div class="feedback" id="feedback">👋 Step ${state.greetStep+1}/3</div></div>`;
-  sceneAudio.onclick=()=>speak(s.say,sceneAudio);setTimeout(()=>speak(s.say,sceneAudio),120);
+  sceneAudio.onclick=()=>speak(s.say,sceneAudio);
   const btns={teacherBtn:'老师',friendBtn:'小朋友',principalBtn:'校长'};
   Object.entries(btns).forEach(([id,word])=>$('#'+id).onclick=()=>{
     if(word===s.target){
-      speak(s.say);addStar();$('#feedback').textContent='Great greeting! 👋';$('#feedback').className='feedback good';
+      speak(s.say,sceneAudio);addStar();$('#feedback').textContent='Great greeting! 👋';$('#feedback').className='feedback good';
       state.greetStep++;setTimeout(()=>{if(state.greetStep>=3)completeLevel('Welcome to School!','You greeted everyone. Time for the final quiz ⭐','quiz');else renderGreet();},600);
     }else{if(!loseHeart($('#'+id))){$('#feedback').textContent='Try the person the prompt asks for.';$('#feedback').className='feedback bad';}}
   });
